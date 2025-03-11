@@ -9,7 +9,6 @@ import jakarta.ws.rs.Path;
 public class DepartmentResource {
 
     private final Template department;
-
     public DepartmentResource(Template department) {
         this.department = department;
     }
