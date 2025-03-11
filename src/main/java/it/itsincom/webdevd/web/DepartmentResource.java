@@ -6,7 +6,6 @@ import it.itsincom.webdevd.service.DepartmentService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-
 import java.time.LocalDate;
 import java.util.List;
 
