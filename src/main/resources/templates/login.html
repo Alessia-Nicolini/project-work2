@@ -6,12 +6,20 @@
 </head>
 
 <body>
-<form action="/login" method="post">
-    <label for="email">E-mail:</label>
-    <input type="email" name="email" id="email" required>
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required>
+<header>
+    <h1 class="l-title">Accedi</h1>
+</header>
+<form action="/login" method="post" id="l-form">
+    <div class="l-form-field">
+        <label for="email">E-mail:</label>
+        <input type="email" name="email" id="email" required>
+    </div>
+    <div class="l-form-field">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+    </div>
     <button type="submit">Accedi</button>
 </form>
+<p id="l-pw-forgotten">Password dimenticata? <a href="#">Clicca qui</a> per reimpostarla.</p>
 </body>
 </html>

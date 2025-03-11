@@ -1,4 +1,4 @@
-package it.itsincom.webdevd.service;
+package it.itsincom.webdevd.services;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.NewCookie;
@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 @ApplicationScoped
-public class UserSession {
+public class SessionService {
 
     private static final String SESSION_COOKIE_NAME = "session";
 
