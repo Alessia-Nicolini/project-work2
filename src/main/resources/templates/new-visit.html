@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Visit</title>
+</head>
+<body>
+<h1>Registra una nuova visita:</h1>
+<form action="/" method="post">
+    <label for="date">Inserisci la data:</label>
+    <input type="date" id="date" name="date" placeholder="Inserisci la data" required>
+
+    <label for="start">Inserisci l'ora di inizio della visita:</label>
+    <input type="time" id="start" name="start" placeholder="Inserisci l'ora di inizio" required>
+
+    <label for="duration">Inserisci la durata della visita:</label>
+    <input type="time" id="duration" name="duration" min="0" placeholder="Inserisci la durata:" required>
+
+
+    <button type="submit" value="Invia">Invia</button>
+    <button type="reset" value="Cancella">Elimina </button>
+</form>
+
+</body>
+</html>
