@@ -1,6 +1,7 @@
 package it.itsincom.webdevd.web;
 
 import io.quarkus.qute.Template;
+import io.quarkus.qute.TemplateInstance;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -13,19 +14,18 @@ import java.time.LocalTime;
 
 
 
-@Path("new-visit")
-public class VisitResource {
-    private static final String FILE_PATH = "data/visit.csv";
+@Path("newVisit")
+public class NewVisitResource {
 
-    private final Template visit;
+    private final Template newVisit;
 
-    public VisitResource(Template visit) {
-        this.visit = visit;
+    public NewVisitResource(Template newVisit) {
+        this.newVisit = newVisit;
     }
 
     @GET
-    public Response showVisit() {
-        return Response.ok(visit.render()).build();
+    public TemplateInstance showVisit() {
+        return newVisit.instance();
     }
 
     @POST
@@ -38,8 +38,8 @@ public class VisitResource {
 
         String FILE_PATH = "data/visit.csv";
         LocalTime end = start.plusMinutes(duration);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
-            writer.write(STR."\{mail},\{date},\{start},\{end}");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+            writer.write(mail + "," + date + "," + start + "," + end);
             writer.newLine();
             return Response.ok("Dati salvati correttamente!").build();
         } catch (IOException e) {
@@ -48,6 +48,7 @@ public class VisitResource {
     }
 
 }
+
 
 
 
