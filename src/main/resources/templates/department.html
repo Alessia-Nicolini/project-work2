@@ -4,13 +4,51 @@
     <meta charset="UTF-8">
     <title>Department</title>
     <link href="main-style.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+        nav {
+            background-color: #cc88f9;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        a {
+            color: white;
+        }
+        h2 {
+            color: #382673;
+        }
+        input {
+            margin-top: 20px;
+            margin-left: 10px;
+            margin-bottom: 20px;
+        }
+        label {
+            margin-left: 20px;
+        }
+        table {
+            border: 2px solid #cc88f9;
+            border-radius: 5px;
+            padding: 5px;
+            width: 80%;
+            text-align: center;
+            margin: auto;
+        }
+        th, td {
+            border-right: 1px solid #cc88f9;
+            border-bottom: 1px solid #cc88f9;
+        }
+    </style>
 </head>
 <body>
-    <div class="navbar">
+    <nav class="navbar">
+        <h2>InfoDrive</h2>
         <a href="newVisitor.html" title="add new visitor">Aggiungi visitatore</a>
         <a href="newVisit.html" title="add visit">Aggiungi visita</a>
         <a href="delete-visit.html" title="delete visit">Elimina visita</a>
-    </div>
+    </nav>
     <form method="get" action="/department">
         <label>Data</label>
         <input type="date" name="data" value="{dataSelezionata}" required/>
