@@ -2,7 +2,7 @@ package it.itsincom.webdevd.web;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import it.itsincom.webdevd.model.Visita;
+import it.itsincom.webdevd.model.Visit;
 import it.itsincom.webdevd.service.DepartmentService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -27,7 +27,7 @@ public class DepartmentResource {
     @GET
     public TemplateInstance showDepartmentPage(@QueryParam("data") String data) {
         LocalDate date = (data != null && !data.isEmpty()) ? LocalDate.parse(data) : LocalDate.now();
-        List<Visita> visite = departmentService.getVisiteByDate(date);
-        return department.data("visite", visite, "dataSelezionata", date);
+        List<Visit> visits = departmentService.getVisitsByDate(date);
+        return department.data("visite", visits, "dataSelezionata", date);
     }
 }

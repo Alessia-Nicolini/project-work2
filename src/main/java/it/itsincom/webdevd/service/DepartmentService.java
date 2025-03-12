@@ -1,7 +1,7 @@
 package it.itsincom.webdevd.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import it.itsincom.webdevd.model.Visita;
+import it.itsincom.webdevd.model.Visit;
 
 import java.io.*;
 import java.nio.file.*;
@@ -12,17 +12,17 @@ import java.util.*;
 public class DepartmentService {
     private static final String VISITE_FILE = "src/main/resources/visit.csv";
 
-    public List<Visita> getVisiteByDate(LocalDate data) {
-        List<Visita> visite = new ArrayList<>();
+    public List<Visit> getVisitsByDate(LocalDate data) {
+        List<Visit> visite = new ArrayList<>();
 
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(VISITE_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                Visita visita = Visita.fromCSV(line);
+                Visit visit = Visit.fromCSV(line);
 
 
-                if (visita != null && visita.date.equals(data)) {
-                    visite.add(visita);
+                if (visit != null && visit.date.equals(data)) {
+                    visite.add(visit);
                 }
             }
         } catch (IOException e) {
