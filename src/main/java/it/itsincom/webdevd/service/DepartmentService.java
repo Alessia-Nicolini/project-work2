@@ -12,7 +12,7 @@ import java.util.*;
 public class DepartmentService {
     private static final String VISITE_FILE = "src/main/resources/visit.csv";
 
-    public List<Visit> getVisiteByDate(LocalDate data) {
+    public List<Visit> getVisitsByDate(LocalDate data) {
         List<Visit> visite = new ArrayList<>();
 
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(VISITE_FILE))) {

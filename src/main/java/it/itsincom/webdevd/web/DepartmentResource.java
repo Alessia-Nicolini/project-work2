@@ -27,7 +27,7 @@ public class DepartmentResource {
     @GET
     public TemplateInstance showDepartmentPage(@QueryParam("data") String data) {
         LocalDate date = (data != null && !data.isEmpty()) ? LocalDate.parse(data) : LocalDate.now();
-        List<Visit> visits = departmentService.getVisiteByDate(date);
+        List<Visit> visits = departmentService.getVisitsByDate(date);
         return department.data("visite", visits, "dataSelezionata", date);
     }
 }
