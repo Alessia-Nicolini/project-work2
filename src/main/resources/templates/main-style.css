@@ -1,4 +1,9 @@
 body {
     font-family: Helvetica, Helvetica Neue, Arial, sans-serif;
     background-color: #382673;
+    color: white;
+}
+
+#navbar {
+    color: white;
 }
