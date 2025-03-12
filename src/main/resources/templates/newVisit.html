@@ -2,9 +2,48 @@
 <html>
 <head>
     <title>New Visit</title>
+    <link href="main-style.css" rel="stylesheet" type="text/css"/>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+        }
+        .visit-conteiner{
+            background-color: #cc88f9;
+            padding: 30px;
+            border-radius: 5px;
+            width: 600px;
+            height: auto;
+            text-align: center;
+            flex-direction:column;
+        }
+        input{
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            margin-top: 15px;
+            border: 1px solid black;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button{
+            background-color: white;
+            border-radius: 5px;
+            margin: 15px;
+            padding: 10px;
+            width: 50%;
+        }
+        #button{
+            display: flex;
+        }
+    </style>
 </head>
 <body>
-<h1>Registra una nuova visita:</h1>
+<div class="visit-conteiner">
+<h1>Aggiungi una nuova visita:</h1>
 <form action="/" method="post">
     <label for="email">Inserisci l'email:</label>
     <input type="email" id="email" name="email" placeholder="Inserisci l'email" required>
@@ -18,10 +57,11 @@
     <label for="duration">Inserisci la durata della visita in minuti:</label>
     <input type="number" id="duration" name="duration" min="0" placeholder="Inserisci la durata in minuti:" required>
 
-
-    <button type="submit" value="Invia">Invia</button>
-    <button type="reset" value="Cancella">Elimina </button>
+    <div id="button">
+        <button type="submit" value="Invia">Aggiungi</button>
+        <button type="reset" value="Cancella">Elimina</button>
+    </div>
 </form>
-
+</div>
 </body>
 </html>
