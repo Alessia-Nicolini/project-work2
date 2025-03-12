@@ -1,6 +1,7 @@
 package it.itsincom.webdevd.web;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import java.io.*;
@@ -8,7 +9,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-@Path("/visitors")
+@Path("newVisitor")
 public class NewVisitorResource {
 
     private static final String FILE_PATH = "data/visitors.csv";
