@@ -2,6 +2,7 @@ package it.itsincom.webdevd.web;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
+import it.itsincom.webdevd.model.Visita;
 import it.itsincom.webdevd.service.DepartmentService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
