@@ -11,9 +11,10 @@
         <a href="new-visit.html" title="add visit">Aggiungi visita</a>
         <a href="delete-visit.html" title="delete visit">Elimina visita</a>
     </div>
-    <form method="post">
+    <form method="get" action="/department">
         <label>Data</label>
-        <input type="date"/>
+        <input type="date" name="data" value="{dataSelezionata}" required/>
+        <button type="submit">Cerca</button>
     </form>
     <table>
         <thead>
@@ -24,9 +25,16 @@
             </tr>
         </thead>
         <tbody>
-
+            {#for visita in visite}
+                <tr>
+                    <td>{visita.nome} {visita.cognome}</td>
+                    <td>{visita.oraInizio}</td>
+                    <td>{visita.oraFine}</td>
+                </tr>
+            {/for}
         </tbody>
     </table>
 
 </body>
 </html>
+
