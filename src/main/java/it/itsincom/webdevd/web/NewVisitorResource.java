@@ -8,7 +8,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-@Path("/visitors")
+@Path("/new-visitor")
 public class NewVisitorResource {
 
     private static final String FILE_PATH = "data/visitors.csv";
