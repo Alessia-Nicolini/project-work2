@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class Visita {
+public class Visit {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -15,7 +15,7 @@ public class Visita {
     public LocalTime start;
     public LocalTime end;
 
-    public Visita(String name, String surname, LocalDate date, LocalTime start, LocalTime end) {
+    public Visit(String name, String surname, LocalDate date, LocalTime start, LocalTime end) {
         this.name = name;
         this.surname = surname;
         this.date = date;
@@ -29,7 +29,7 @@ public class Visita {
                 start.format(TIME_FORMATTER) + "," + end.format(TIME_FORMATTER);
     }
 
-    public static Visita fromCSV(String line) {
+    public static Visit fromCSV(String line) {
         String[] parts = line.split(",");
 
         try {
@@ -38,7 +38,7 @@ public class Visita {
             LocalTime oraInizio = LocalTime.parse(parts[3].trim(), TIME_FORMATTER);
             LocalTime oraFine = LocalTime.parse(parts[4].trim(), TIME_FORMATTER);
 
-            return new Visita(parts[0], parts[1], data, oraInizio, oraFine);
+            return new Visit(parts[0], parts[1], data, oraInizio, oraFine);
         } catch (DateTimeParseException e) {
             System.err.println("Errore nel parsing della data: " + parts[2]);
             e.printStackTrace();
