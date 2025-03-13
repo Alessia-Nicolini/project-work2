@@ -1,5 +1,11 @@
 id,first_name,last_name,email,password,department
-1,Rabbi,Hossain,rabbi.hossain@itsincom.it,user,A
-2,Alessandro,Limongi,alessandro.limongi@itsincom.it,user,Portineria
-3,Alessia,Nicolini,alessia.nicolini@itsincom.it,user,B
-4,Martina,Mizza,martina.mizza@itsincom.it,user,C
+1,Giovanni,Rossi,giovanni.rossi@example.com,pass123,VENDITE
+2,Marco,Bianchi,marco.bianchi@example.com,secret456,PORTINERIA
+3,Lucia,Verdi,lucia.verdi@example.com,hello789,MARKETING
+4,Francesca,Neri,francesca.neri@example.com,abc123,HR
+5,Alessandro,Romano,alessandro.romano@example.com,pass321,IT
+6,Silvia,Ferrari,silvia.ferrari@example.com,secret321,PORTINERIA
+7,Antonio,Moretti,antonio.moretti@example.com,qwerty,OPERAZIONI
+8,Elena,Russo,elena.russo@example.com,pass987,FINANZA
+9,Paolo,Conte,paolo.conte@example.com,abc987,ASSISTENZA
+10,Martina,Esposito,martina.esposito@example.com,pass456,VENDITE
