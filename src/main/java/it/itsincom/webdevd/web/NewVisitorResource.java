@@ -44,9 +44,7 @@ public class NewVisitorResource {
 
         if (isVisitorAlreadyRegistered(name, surname, phone, email)) {
             messaggioErrore = "Il visitatore è già registrato!";
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(newVisitor.data("message", messaggioErrore))
-                    .build();
+            return Response.seeOther(URI.create("department")).entity(newVisitor.data("visitorConfermation", "Visitatore Salvato")).build();
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {

@@ -44,9 +44,6 @@
 <body>
 <div class="visitor-conteiner">
 <h1>Registra un nuovo visitatore:</h1>
-    {#if message}
-        {message}
-    {/if}
 <form action="/newVisitor" method="post">
     <label for="name">Inserisci il nome:</label>
     <input type="text" id="name" name="name" placeholder="Inserisci il nome" required>
