@@ -1,8 +1,7 @@
-package it.itsincom.webdevd.models.states;
-
+package it.itsincom.webdevd.models.enums;
 
 public enum Status {
-    PENDING,
-    IN_PROGRESS,
-    COMPLETED
+    IN_ATTESA,
+    IN_CORSO,
+    COMPLETATO
 }

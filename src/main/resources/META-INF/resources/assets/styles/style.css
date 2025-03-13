@@ -1,5 +1,6 @@
 :root {
     --primary: #382673;
+    --secondary: #F0F8FF;
 }
 
 * {
@@ -7,4 +8,9 @@
     margin: 0;
     font-family: Helvetica, HelveticaNeue, Arial sans-serif;
     font-weight: 400;
+}
+
+body {
+    background-color: var(--primary);
+    color: var(--secondary);
 }
