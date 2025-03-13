@@ -1,0 +1,10 @@
+:root {
+    --primary: #382673;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Helvetica, HelveticaNeue, Arial sans-serif;
+    font-weight: 400;
+}
