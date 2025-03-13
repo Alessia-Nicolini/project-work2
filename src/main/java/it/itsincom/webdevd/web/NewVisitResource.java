@@ -9,6 +9,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 
 import java.io.*;
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -41,7 +42,7 @@ public class NewVisitResource {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             writer.write(mail + "," + date + "," + start + "," + end);
             writer.newLine();
-            return Response.ok("Dati salvati correttamente!").build();
+            return Response.seeOther(URI.create("department")).entity(newVisit.data("visitConfermation", "Visita Salvata")).build();
         } catch (IOException e) {
             return Response.status(500).entity("Errore nel salvataggio dei dati").build();
         }
