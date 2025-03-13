@@ -27,22 +27,22 @@ public class NewVisitorResource {
 
     @POST
     public Response processRegistration(
-            @FormParam("nome") String nome,
-            @FormParam("cognome") String cognome,
-            @FormParam("telefono") String telefono,
+            @FormParam("name") String name,
+            @FormParam("surname") String surname,
+            @FormParam("phone") String phone,
             @FormParam("email") String email) {
 
         String messaggioErrore = null;
 
-        if (nome == null || nome.isEmpty() || cognome == null || cognome.isEmpty() ||
-                telefono == null || telefono.isEmpty() || email == null || email.isEmpty()) {
+        if (name == null || name.isEmpty() || surname == null || surname.isEmpty() ||
+                phone == null || phone.isEmpty() || email == null || email.isEmpty()) {
             messaggioErrore = "Tutti i campi sono obbligatori.";
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(newVisitor.data("message", messaggioErrore))
                     .build();
         }
 
-        if (isVisitorAlreadyRegistered(nome, cognome, telefono, email)) {
+        if (isVisitorAlreadyRegistered(name, surname, phone, email)) {
             messaggioErrore = "Il visitatore è già registrato!";
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(newVisitor.data("message", messaggioErrore))
@@ -50,13 +50,13 @@ public class NewVisitorResource {
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            writer.write(nome + "," + cognome + "," + telefono + "," + email);
+            writer.write(name + "," + surname + "," + phone + "," + email);
             writer.newLine();
         } catch (IOException e) {
             return Response.serverError().entity("Errore nel salvataggio.").build();
         }
 
-        return Response.seeOther(URI.create("/department.html")).build();
+        return Response.seeOther(URI.create("/department")).build();
 
     }
 
