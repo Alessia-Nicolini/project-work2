@@ -63,11 +63,11 @@
             </tr>
         </thead>
         <tbody>
-            {#for visita in visite}
+            {#for visit in visite}
                 <tr>
-                    <td>{visita.nome} {visita.cognome}</td>
-                    <td>{visita.oraInizio}</td>
-                    <td>{visita.oraFine}</td>
+                    <td>{visit.name} {visit.surname}</td>
+                    <td>{visit.start}</td>
+                    <td>{visit.end}</td>
                 </tr>
             {/for}
         </tbody>
