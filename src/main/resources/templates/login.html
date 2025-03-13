@@ -3,15 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>InfoDrive | Accedi</title>
+    <link href="main-style.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .loginContainer {
+            background-color: #cc88f9;
+            padding: 30px;
+            border-radius: 5px;
+            width: 300px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            margin-top: 15px;
+            border: 1px solid black;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: white;
+            border-radius: 5px;
+            margin-top: 15px;
+            padding: 10px;
+            width: 50%;
+        }
+    </style>
 </head>
 
 <body>
+<div class="loginContainer" title="login">
+    <h2>Login</h2>
 <form action="/login" method="post">
-    <label for="email">E-mail:</label>
-    <input type="email" name="email" id="email" required>
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required>
+    <input type="email" name="email" id="email" placeholder="E-mail" required>
+    <input type="password" name="password" id="password" placeholder="Password" required>
     <button type="submit">Accedi</button>
 </form>
+</div>
 </body>
 </html>
