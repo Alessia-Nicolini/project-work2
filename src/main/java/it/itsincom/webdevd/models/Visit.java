@@ -1,35 +1,30 @@
 package it.itsincom.webdevd.models;
 
-import it.itsincom.webdevd.models.states.Status;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-
+import it.itsincom.webdevd.models.enums.Status;
+import java.time.LocalDateTime;
 
 public class Visit {
-    private final Long id;
+    private final int id;
     private final String visitorName;
     private final String employeeName;
-    private final LocalDate date;
-    private final LocalTime startTime;
+    private final LocalDateTime start;
     private final int expectedDuration;
+    private LocalDateTime end;
     private String badgeCode;
-    private LocalTime actualEndTime;
     private Status status;
 
-    public Visit(Long id, String visitorName, String employeeName, LocalDate date, LocalTime startTime, int expectedDuration, String badgeCode, LocalTime actualEndTime, Status status) {
+    public Visit(int id, String visitorName, String employeeName, LocalDateTime start, int expectedDuration, LocalDateTime end, String badgeCode, Status status) {
         this.id = id;
         this.visitorName = visitorName;
         this.employeeName = employeeName;
-        this.date = date;
-        this.startTime = startTime;
+        this.start = start;
         this.expectedDuration = expectedDuration;
+        this.end = end;
         this.badgeCode = badgeCode;
-        this.actualEndTime = actualEndTime;
         this.status = status;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -41,35 +36,34 @@ public class Visit {
         return employeeName;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
+    public LocalDateTime getStart() {
+        return start;
     }
 
     public int getExpectedDuration() {
         return expectedDuration;
     }
 
+    public LocalDateTime getEnd() {
+        return end;
+    }
+
+    public void setAEnd(LocalDateTime end) {
+        this.end = end;
+    }
+
     public String getBadgeCode() {
         return badgeCode;
     }
+
     public void setBadgeCode(String badgeCode) {
         this.badgeCode = badgeCode;
-    }
-
-    public LocalTime getActualEndTime() {
-        return actualEndTime;
-    }
-    public void setActualEndTime(LocalTime actualEndTime) {
-        this.actualEndTime = actualEndTime;
     }
 
     public Status getStatus() {
         return status;
     }
+
     public void setStatus(Status status) {
         this.status = status;
     }

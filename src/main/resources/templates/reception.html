@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>InfoDrive | Dashboard</title>
+</head>
+<body>
+<nav>
+    <ul>
+        <li>
+            Badges: {badge-stats.available} available / {badge-stats.total} total
+        </li>
+        <li>
+            Profile: <!-- Replace with dynamic user profile if available -->
+            {employee}
+        </li>
+    </ul>
+</nav>
+<!-- Main Section -->
+<main>
+    <!-- Date Filter -->
+    <section id="date-filter">
+        <form method="GET" action="/reception">
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" name="date" value="{selected-date}">
+            <button type="submit">View</button>
+        </form>
+    </section>
+    <!-- Visits Table -->
+    <section id="visits-table">
+        <table border="1" cellspacing="0" cellpadding="5">
+            <thead>
+            <tr>
+                <th>Visitor</th>
+                <th>Employee</th>
+                <th>Visit Time</th>
+                <th>Status</th>
+                <th>Badge</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {#each visits}
+                <tr>
+                    <td>{it.visitorName}</td>
+                    <td>{it.employeeName}</td>
+                    <td>{it.start.toLocalTime}</td>
+                    <td>
+                        {#if it.status == pending}
+                            In attesa
+                        {#else if it.status == in-progress}
+                            In corso
+                        {#else}
+                            Completato
+                        {/if}
+                    </td>
+                    <td>{it.badgeCode != null ? it.badgeCode : '-'}</td>
+                    <td>
+                        {#if badge-stats.available > 0 && it.status == pending}
+                            <form method="POST" action="/reception/assign-badge" style="display:inline;">
+                                <input type="hidden" name="visit-id" value="{it.id}">
+                                <button type="submit">Assign Badge</button>
+                            </form>
+                        {/if}
+                        {#if it.status == in-progress}
+                            <form method="POST" action="/reception/end-visit" style="display:inline;">
+                                <input type="hidden" name="visit-id" value="{it.id}">
+                                <button type="submit">End Visit</button>
+                            </form>
+                        {/if}
+                    </td>
+                </tr>
+            {/each}
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>
