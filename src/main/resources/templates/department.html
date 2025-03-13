@@ -45,9 +45,9 @@
 <body>
     <nav class="navbar">
         <h2>InfoDrive</h2>
-        <a href="newVisitor.html" title="add new visitor">Aggiungi visitatore</a>
-        <a href="newVisit.html" title="add visit">Aggiungi visita</a>
-        <a href="delete-visit.html" title="delete visit">Elimina visita</a>
+        <a href="/newVisitor" title="add new visitor">Aggiungi visitatore</a>
+        <a href="/newVisit" title="add visit">Aggiungi visita</a>
+        <a href="/delete-visit" title="delete visit">Elimina visita</a>
     </nav>
     <form method="get" action="/department">
         <label>Data</label>
@@ -65,9 +65,9 @@
         <tbody>
             {#for visita in visite}
                 <tr>
-                    <td>{visita.nome} {visita.cognome}</td>
-                    <td>{visita.oraInizio}</td>
-                    <td>{visita.oraFine}</td>
+                    <td>{visita.name} {visita.surname}</td>
+                    <td>{visita.start}</td>
+                    <td>{visita.end}</td>
                 </tr>
             {/for}
         </tbody>
