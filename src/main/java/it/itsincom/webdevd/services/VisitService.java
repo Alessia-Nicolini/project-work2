@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class VisitService {
 
     public static final String OPERATION_SUCCESS = "Success";
+    private static final int BADGE_MAX_LATE = 15;
 
     private final VisitRepository visitRepository;
     private final BadgeRepository badgeRepository;
@@ -38,6 +39,14 @@ public class VisitService {
         }
         if (visit.getStatus() != Status.IN_ATTESA) {
             return "Il badge può essere assegnato solo a visite in attesa.";
+        }
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startTime = visit.getStart();
+        if (now.isBefore(startTime)) {
+            return "Non puoi assegnare il badge prima dell'orario di inizio della visita.";
+        }
+        if (now.isAfter(startTime.plusMinutes(BADGE_MAX_LATE))) {
+            return "Il periodo per l'assegnazione del badge è scaduto.";
         }
         String badgeCode = badgeRepository.assignFirstAvailableBadge();
         if (badgeCode == null) {
