@@ -33,53 +33,48 @@ public class ReceptionResource {
     }
 
     @GET
-    public Response getReceptionPage(@QueryParam("date") String dateStr, @CookieParam(SessionService.SESSION_COOKIE_NAME) String sessionId) {
+    public Response getReceptionPage(@CookieParam(SessionService.SESSION_COOKIE_NAME) String sessionId, @QueryParam("date") String dateStr) {
         Employee employee = sessionService.getEmployeeFromSession(sessionId);
         if (employee == null) {
             return Response.seeOther(URI.create("/login")).build();
         }
         LocalDate date = getDate(dateStr);
-        List<Visit> visits = visitService.getVisitsByDate(date);
-        Map<String, Integer> badgeStats = badgeService.getBadgeStats();
-        TemplateInstance page = reception
-                .data("employee", employee.getFirstName() + " " + employee.getLastName())
-                .data("visits", visits)
-                .data("badge-stats", badgeStats)
-                .data("selected-date", date)
-                .data("pending", Status.IN_ATTESA)
-                .data("in-progress", Status.IN_CORSO);
+        TemplateInstance page = getReceptionTemplate(employee, date, null, null);
         return Response.ok(page).build();
     }
 
-
     @POST
     @Path("/assign-badge")
-    public Response assignBadge(@FormParam("visit-id") int visitId) {
-        try {
-            visitService.assignBadge(visitId);
+    public Response assignBadge(@FormParam("visit-id") int visitId, @CookieParam(SessionService.SESSION_COOKIE_NAME) String sessionId, @QueryParam("date") String dateStr) {
+        String assignmentResult = visitService.assignBadge(visitId);
+        if (assignmentResult.equals(VisitService.OPERATION_SUCCESS)) {
             return Response.seeOther(URI.create("/reception")).build();
         }
-        catch (Exception e) {
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Error assigning badge: " + e.getMessage())
-                    .build();
-        }
+        return buildErrorResponse(sessionId, dateStr, assignmentResult, null);
     }
 
     @POST
     @Path("/end-visit")
-    public Response endVisit(@FormParam("visit-id") int visitId) {
-        try {
-            visitService.endVisit(visitId);
+    public Response endVisit(@FormParam("visit-id") int visitId, @CookieParam(SessionService.SESSION_COOKIE_NAME) String sessionId, @QueryParam("date") String dateStr) {
+        String endingResult = visitService.endVisit(visitId);
+        if (endingResult.equals(VisitService.OPERATION_SUCCESS)) {
             return Response.seeOther(URI.create("/reception")).build();
         }
-        catch (Exception e) {
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Error ending visit: " + e.getMessage())
-                    .build();
-        }
+        return buildErrorResponse(sessionId, dateStr, null, endingResult);
+    }
+
+    private TemplateInstance getReceptionTemplate(Employee employee, LocalDate date, String assignmentError, String endingResult) {
+        List<Visit> visits = visitService.getVisitsByDate(date);
+        Map<String, Integer> badgeStats = badgeService.getBadgeStats();
+        return reception
+                .data("employee", employee.getFirstName() + " " + employee.getLastName())
+                .data("visits", visits)
+                .data("badge-stats", badgeStats)
+                .data("selected-date", date)
+                .data("assignment-error", assignmentError)
+                .data("ending-error", endingResult)
+                .data("pending", Status.IN_ATTESA)
+                .data("in-progress", Status.IN_CORSO);
     }
 
     private LocalDate getDate(String dateStr) {
@@ -92,5 +87,15 @@ public class ReceptionResource {
         catch (DateTimeParseException e) {
             return LocalDate.now();
         }
+    }
+
+    private Response buildErrorResponse(String sessionId, String dateStr, String assignmentError, String endingError) {
+        Employee employee = sessionService.getEmployeeFromSession(sessionId);
+        if (employee == null) {
+            return Response.seeOther(URI.create("/login")).build();
+        }
+        LocalDate date = getDate(dateStr);
+        TemplateInstance page = getReceptionTemplate(employee, date, assignmentError, endingError);
+        return Response.status(500).entity(page).build();
     }
 }

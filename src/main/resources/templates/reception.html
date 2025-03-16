@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>InfoDrive | Dashboard</title>
+    <link rel="stylesheet" href="/assets/styles/style.css">
+    <script src="/assets/scripts/script.js" defer></script>
 </head>
 <body>
 <nav>
@@ -16,6 +18,9 @@
         </li>
     </ul>
 </nav>
+{#if assignment-error}
+    {assignment-error}
+{/if}
 <!-- Main Section -->
 <main>
     <!-- Date Filter -->
@@ -42,8 +47,8 @@
             <tbody>
             {#each visits}
                 <tr>
-                    <td>{it.visitorName}</td>
-                    <td>{it.employeeName}</td>
+                    <td>{it.visitorId}</td>
+                    <td>{it.employeeId}</td>
                     <td>{it.start.toLocalTime}</td>
                     <td>
                         {#if it.status == pending}

@@ -2,6 +2,7 @@ package it.itsincom.webdevd.services;
 
 import it.itsincom.webdevd.models.enums.Status;
 import it.itsincom.webdevd.models.Visit;
+import it.itsincom.webdevd.repositories.BadgeRepository;
 import it.itsincom.webdevd.repositories.VisitRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -13,10 +14,14 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class VisitService {
 
-    private final VisitRepository visitRepository;
+    public static final String OPERATION_SUCCESS = "Success";
 
-    public VisitService(VisitRepository visitRepository) {
+    private final VisitRepository visitRepository;
+    private final BadgeRepository badgeRepository;
+
+    public VisitService(VisitRepository visitRepository, BadgeRepository badgeRepository) {
         this.visitRepository = visitRepository;
+        this.badgeRepository = badgeRepository;
     }
 
     public List<Visit> getVisitsByDate(LocalDate date) {
@@ -26,26 +31,38 @@ public class VisitService {
                 .collect(Collectors.toList());
     }
 
-    public void assignBadge(int visitId) {
-        Visit visit = visitRepository
-                .getVisitById(visitId)
-                .orElseThrow(() -> new IllegalArgumentException("Visit with id " + visitId + " not found."));
-        if (visit.getStatus() != Status.IN_ATTESA) {
-            throw new IllegalStateException("Badge can only be assigned to pending visits.");
+    public String assignBadge(int visitId) {
+        Visit visit = visitRepository.getVisitById(visitId);
+        if (visit == null) {
+            return "Visita non valida.";
         }
-        //visit.setBadgeCode(badgeCode);
+        if (visit.getStatus() != Status.IN_ATTESA) {
+            return "Il badge può essere assegnato solo a visite in attesa.";
+        }
+        String badgeCode = badgeRepository.assignFirstAvailableBadge();
+        if (badgeCode == null) {
+            return "Nessun badge disponibile.";
+        }
+        visit.setBadgeCode(badgeCode);
         visit.setStatus(Status.IN_CORSO);
         visitRepository.updateVisit(visit);
+        return OPERATION_SUCCESS;
     }
 
-    public void endVisit(int visitId) {
-        Visit visit = visitRepository.getVisitById(visitId)
-                .orElseThrow(() -> new IllegalArgumentException("Visit with id " + visitId + " not found."));
+    public String endVisit(int visitId) {
+        Visit visit = visitRepository.getVisitById(visitId);
+        if (visit == null) {
+            return "Visita non valida.";
+        }
         if (visit.getStatus() != Status.IN_CORSO) {
-            throw new IllegalStateException("Only visits in progress can be ended.");
+            return "Solo le visite in corso possono essere terminate.";
         }
         visit.setStatus(Status.COMPLETATO);
         visit.setAEnd(LocalDateTime.now());
         visitRepository.updateVisit(visit);
+        if (visit.getBadgeCode() != null) {
+            badgeRepository.releaseBadge(visit.getBadgeCode());
+        }
+        return OPERATION_SUCCESS;
     }
 }
