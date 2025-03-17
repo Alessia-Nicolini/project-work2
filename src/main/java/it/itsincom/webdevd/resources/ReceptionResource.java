@@ -79,9 +79,9 @@ public class ReceptionResource {
     }
 
     private Response buildErrorResponse(String sessionId, String dateStr, String assignmentError, String endingError) {
-        Employee employee = sessionService.getEmployeeFromSession(sessionId);
-        if (employee == null) {
-            return Response.seeOther(URI.create("/login")).build();
+        Response response = allDepartmentsService.checkSession(sessionId);
+        if (response != null) {
+            return response;
         }
         LocalDate date = allDepartmentsService.getDate(dateStr);
         TemplateInstance page = getReceptionTemplate(date, assignmentError, endingError);

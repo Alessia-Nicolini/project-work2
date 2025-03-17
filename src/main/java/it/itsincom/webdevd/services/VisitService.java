@@ -74,4 +74,6 @@ public class VisitService {
         }
         return OPERATION_SUCCESS;
     }
+
+//    public
 }
