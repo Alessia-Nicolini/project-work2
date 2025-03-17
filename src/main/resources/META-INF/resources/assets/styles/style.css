@@ -1,6 +1,14 @@
+/* ------ GENERAL ------ */
+
 :root {
     --primary: #382673;
     --secondary: #F0F8FF;
+    --tertiary: #AF92FF;
+    --quaternary: #1E1048;
+    --success: #2E8B57;
+    --error: #CA2A22;
+    --error-container: #540004;
+    --logout: #A2221B;
 }
 
 * {
@@ -10,7 +18,230 @@
     font-weight: 400;
 }
 
+.unselectable {
+    user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
 body {
     background-color: var(--primary);
+}
+
+h1 {
     color: var(--secondary);
+}
+
+span {
+    font-weight: 700;
+    color: var(--tertiary);
+}
+
+/* ------ LOGIN ------ */
+
+#l-body {
+    background-color: var(--quaternary);
+}
+
+#l-header {
+    margin-top: 2rem;
+}
+
+#l-title {
+    font-size: 3rem;
+    text-align: center;
+}
+
+#l-form-section {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#l-section-title {
+    font-size: 1.7rem;
+    text-align: center;
+    color: var(--secondary);
+}
+
+#l-err-cont {
+    width: 17rem;
+    padding: 1rem 1.3rem;
+    margin-top: 1.6rem;
+    outline: .0625rem solid var(--error);
+    border-radius: .5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--error-container);
+}
+
+#l-err-msg {
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+#l-err-canc {
+    width: 1.5rem;
+    margin-left: .7rem;
+    transition: 150ms ease-out;
+}
+#l-err-canc:hover {
+    filter: brightness(0.8);
+}
+#l-err-canc:active {
+    transition: 100ms ease-out;
+    filter: brightness(0.6);
+}
+
+#l-form {
+    width: 17rem;
+    padding: 1.3rem;
+    margin-top: 1.6rem;
+    outline: .0625rem solid #AF92FF88;
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary);
+}
+
+.l-form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.l-label-cont {
+    display: flex;
+    justify-content: space-between;
+}
+
+#l-form label {
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+#l-form input {
+    width: 15.47rem;
+    padding: .4rem .75rem;
+    margin: .5rem 0 1.25rem 0;
+    border: none;
+    border-radius: .3rem;
+    outline: 0.0625rem solid #AF92FF88;
+    font-size: 1rem;
+    background-color: var(--quaternary);
+    color: var(--secondary);
+    transition: 100ms ease-out;
+}
+#l-form input:focus {
+    outline: 0.13rem solid var(--tertiary);
+}
+
+#password-forgotten {
+    font-size: .9rem;
+    text-decoration: none;
+    line-height: 1.3;
+    color: var(--tertiary);
+}
+
+#l-form button {
+    padding: .4rem .75rem;
+    border: none;
+    border-radius: .3rem;
+    font-size: 1rem;
+    background-color: var(--success);
+    color: var(--secondary);
+    transition: 300ms ease-out;
+}
+#l-form button:hover {
+    filter: brightness(1.1);
+}
+#l-form button:active {
+    transition: 100ms ease-out;
+    filter: brightness(1.2);
+}
+
+/* ------ DASHBOARD ------ */
+
+#d-header {
+    padding: 0 8rem;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#d-title {
+    font-size: 3rem;
+}
+
+#d-badges-container {
+    padding: 0.3rem 1rem;
+    margin-left: 30rem;
+    border-radius: .6rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    background-color: var(--quaternary);
+}
+
+#d-badges-icon {
+    width: 2.5rem;
+    margin-right: 1rem;
+}
+
+#d-badges-stats {
+    color: var(--tertiary);
+    cursor: default;
+}
+
+#d-logout {
+    padding: .85rem 1.85rem;
+    border-radius: .6rem;
+    font-size: 1.2rem;
+    text-decoration: none;
+    background-color: var(--logout);
+    color: var(--secondary);
+    transition: 300ms ease-out;
+}
+#d-logout:hover {
+    filter: brightness(1.1);
+}
+#d-logout:active {
+    transition: 100ms ease-out;
+    filter: brightness(1.2);
+}
+
+#d-err-cont {
+    width: 17rem;
+    padding: 1rem 1.3rem;
+    margin-top: 1.6rem;
+    outline: .0625rem solid var(--error);
+    border-radius: .5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--error-container);
+}
+
+#d-err-msg {
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+#d-err-canc {
+    width: 1.5rem;
+    margin-left: .7rem;
+    transition: 150ms ease-out;
+}
+#d-err-canc:hover {
+    filter: brightness(0.8);
+}
+#d-err-canc:active {
+    transition: 100ms ease-out;
+    filter: brightness(0.6);
 }

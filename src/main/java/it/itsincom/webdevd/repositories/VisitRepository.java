@@ -7,7 +7,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
-import org.jboss.logging.Logger;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -24,9 +23,10 @@ import java.util.Optional;
 @ApplicationScoped
 public class VisitRepository {
 
-    private static final Logger logger = Logger.getLogger(VisitRepository.class);
     private static final String CSV_FILE = "data/visits.csv";
-    private static final String[] HEADER = {"id", "visitor_name", "employee_name", "start", "expected_duration", "end", "badge_code", "status"};
+    private static final String[] HEADER = {
+            "id", "visitor_id", "employee_id", "start", "expected_duration", "end", "badge_code", "status"
+    };
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     private static final CSVFormat CSV_FORMAT_READ = CSVFormat.Builder.create()
@@ -45,28 +45,25 @@ public class VisitRepository {
             for (CSVRecord record : csvParser) {
                 visits.add(parseRecord(record));
             }
-        } catch (IOException e) {
-            logger.error("Error reading CSV file: " + e.getMessage(), e);
+        }
+        catch (IOException e) {
+            System.err.println(e.getMessage());
         }
         return visits;
     }
 
-    public Optional<Visit> getVisitById(int id) {
-        return getAllVisits().stream().filter(v -> v.getId() == id).findFirst();
+    public Visit getVisitById(int id) {
+        Optional<Visit> visit = getAllVisits().stream().filter(v -> v.getId() == id).findFirst();
+        return visit.orElse(null);
     }
 
     public void updateVisit(Visit updatedVisit) {
         List<Visit> visits = getAllVisits();
-        boolean found = false;
         for (int i = 0; i < visits.size(); i++) {
             if (visits.get(i).getId() == updatedVisit.getId()) {
                 visits.set(i, updatedVisit);
-                found = true;
                 break;
             }
-        }
-        if (!found) {
-            throw new IllegalArgumentException("Visit with id " + updatedVisit.getId() + " not found.");
         }
         writeAllVisits(visits);
     }
@@ -83,8 +80,8 @@ public class VisitRepository {
             for (Visit visit : visits) {
                 csvPrinter.printRecord(
                         visit.getId(),
-                        visit.getVisitorName(),
-                        visit.getEmployeeName(),
+                        visit.getVisitorId(),
+                        visit.getEmployeeId(),
                         visit.getStart().format(DATE_TIME_FORMATTER),
                         visit.getExpectedDuration(),
                         visit.getEnd() != null ? visit.getEnd().format(DATE_TIME_FORMATTER) : "",
@@ -93,15 +90,16 @@ public class VisitRepository {
                 );
             }
             csvPrinter.flush();
-        } catch (IOException e) {
-            logger.error("Error writing CSV file: " + e.getMessage(), e);
+        }
+        catch (IOException e) {
+            System.err.println(e.getMessage());
         }
     }
 
     private Visit parseRecord(CSVRecord record) {
         int id = Integer.parseInt(record.get("id"));
-        String visitorName = record.get("visitor_name");
-        String employeeName = record.get("employee_name");
+        int visitorId = Integer.parseInt(record.get("visitor_id"));
+        int employeeId = Integer.parseInt(record.get("employee_id"));
         LocalDateTime start = LocalDateTime.parse(record.get("start"), DATE_TIME_FORMATTER);
         int expectedDuration = Integer.parseInt(record.get("expected_duration"));
         String endStr = record.get("end");
@@ -111,6 +109,6 @@ public class VisitRepository {
             badgeCode = null;
         }
         Status status = Status.valueOf(record.get("status").toUpperCase());
-        return new Visit(id, visitorName, employeeName, start, expectedDuration, end, badgeCode, status);
+        return new Visit(id, visitorId, employeeId, start, expectedDuration, end, badgeCode, status);
     }
 }

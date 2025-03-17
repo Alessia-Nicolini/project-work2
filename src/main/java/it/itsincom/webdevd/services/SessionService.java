@@ -13,13 +13,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SessionService {
 
     public static final String SESSION_COOKIE_NAME = "session";
+    private static final int SESSION_MAX_AGE = 3600;
 
     private final Map<String, Employee> sessionsEmployees = new ConcurrentHashMap<>();
 
     public NewCookie createUserSession(Employee employee) {
         String sessionId = UUID.randomUUID().toString();
         sessionsEmployees.put(sessionId, employee);
-        return new NewCookie.Builder(SESSION_COOKIE_NAME).value(sessionId).build();
+        return new NewCookie.Builder(SESSION_COOKIE_NAME)
+                .value(sessionId)
+                .maxAge(SESSION_MAX_AGE)
+                .httpOnly(true)
+                .secure(true)
+                .sameSite(NewCookie.SameSite.STRICT)
+                .build();
     }
 
     public Employee getEmployeeFromSession(String sessionId) {
