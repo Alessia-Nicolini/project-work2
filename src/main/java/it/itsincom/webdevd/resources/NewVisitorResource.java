@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 
 @Path("newVisitor")
 public class NewVisitorResource {
-
     private static final String FILE_PATH = "data/visitors.csv";
 
     private final Template newVisitor;

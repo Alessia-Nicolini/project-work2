@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class VisitService {
-
     public static final String OPERATION_SUCCESS = "Success";
     private static final int BADGE_MAX_LATE = 15;
 
@@ -25,14 +24,13 @@ public class VisitService {
         this.badgeRepository = badgeRepository;
     }
 
-    public List<Visit> getVisitsByDate(LocalDate date) {
-        return visitRepository.getAllVisits()
-                .stream()
+    public List<Visit> getVisitsByDate(LocalDate date, List<Visit> visits) {
+        return visits.stream()
                 .filter(v -> v.getStart().toLocalDate().equals(date))
                 .collect(Collectors.toList());
     }
 
-    public List<Visit> getVisitsByEmployeeId(List<Visit> visits, int employeeId) {
+    public List<Visit> getVisitsByEmployeeId(int employeeId, List<Visit> visits) {
         return visits.stream()
                 .filter(v -> v.getEmployeeId() == employeeId)
                 .collect(Collectors.toList());

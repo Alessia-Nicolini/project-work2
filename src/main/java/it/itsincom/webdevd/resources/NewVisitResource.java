@@ -17,7 +17,6 @@ import java.time.LocalTime;
 
 @Path("newVisit")
 public class NewVisitResource {
-
     private final Template newVisit;
 
     public NewVisitResource(Template newVisit) {

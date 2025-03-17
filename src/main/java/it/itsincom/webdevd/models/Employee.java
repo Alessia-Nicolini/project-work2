@@ -5,7 +5,6 @@ import it.itsincom.webdevd.models.enums.Department;
 import java.util.Objects;
 
 public class Employee {
-
     private final int id;
     private final String firstName;
     private final String lastName;

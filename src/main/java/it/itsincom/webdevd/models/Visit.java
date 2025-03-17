@@ -13,7 +13,14 @@ public class Visit {
     private String badgeCode;
     private Status status;
 
-    public Visit(int id, int visitorId, int employeeId, LocalDateTime start, int expectedDuration, LocalDateTime end, String badgeCode, Status status) {
+    public Visit(int id,
+                 int visitorId,
+                 int employeeId,
+                 LocalDateTime start,
+                 int expectedDuration,
+                 LocalDateTime end,
+                 String badgeCode,
+                 Status status) {
         this.id = id;
         this.visitorId = visitorId;
         this.employeeId = employeeId;

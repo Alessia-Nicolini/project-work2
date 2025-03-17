@@ -15,7 +15,6 @@ import java.nio.file.Paths;
 
 @ApplicationScoped
 public class EmployeeService {
-
     private static final String FILE_PATH = "data/employees.csv";
     private static final String[] HEADER = {"id", "first_name", "last_name", "email", "password", "department"};
 

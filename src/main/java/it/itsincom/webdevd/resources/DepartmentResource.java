@@ -2,9 +2,9 @@ package it.itsincom.webdevd.resources;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import it.itsincom.webdevd.models.Employee;
 import it.itsincom.webdevd.models.Visit;
-import it.itsincom.webdevd.services.AllDepartmentsService;
+import it.itsincom.webdevd.repositories.VisitRepository;
+import it.itsincom.webdevd.services.DepartmentService;
 import it.itsincom.webdevd.services.SessionService;
 import it.itsincom.webdevd.services.VisitService;
 import jakarta.ws.rs.*;
@@ -15,36 +15,42 @@ import java.util.List;
 
 @Path("/department")
 public class DepartmentResource {
-
     private final Template department;
+    private final DepartmentService departmentService;
     private final VisitService visitService;
-    private final AllDepartmentsService allDepartmentsService;
+    private final VisitRepository visitRepository;
     private final SessionService sessionService;
 
-    public DepartmentResource(Template department, VisitService visitService, AllDepartmentsService allDepartmentsService, SessionService sessionService) {
+    public DepartmentResource(Template department,
+                              DepartmentService departmentService,
+                              VisitService visitService,
+                              VisitRepository visitRepository,
+                              SessionService sessionService) {
         this.department = department;
+        this.departmentService = departmentService;
         this.visitService = visitService;
-        this.allDepartmentsService = allDepartmentsService;
+        this.visitRepository = visitRepository;
         this.sessionService = sessionService;
     }
 
     @GET
-    public Response getDepartmentPage(@CookieParam(SessionService.SESSION_COOKIE_NAME) String sessionId, @QueryParam("date") String dateStr) {
-        Response response = allDepartmentsService.checkSession(sessionId);
+    public Response getDepartmentPage(@CookieParam(SessionService.SESSION_COOKIE_NAME) String sessionId,
+                                      @QueryParam("date") String dateStr) {
+        Response response = departmentService.checkSession(sessionId);
         if (response != null) {
             return response;
         }
-        LocalDate date = allDepartmentsService.getDate(dateStr);
+        LocalDate date = departmentService.getDate(dateStr);
         TemplateInstance page = getDepartmentTemplate(date, sessionId);
         return Response.ok(page).build();
     }
 
     private TemplateInstance getDepartmentTemplate(LocalDate date, String sessionId) {
-        List<Visit> visitsByDate = visitService.getVisitsByDate(date);
+        List<Visit> visitsByDate = visitService.getVisitsByDate(date, visitRepository.getAllVisits());
         int employeeId = sessionService.getEmployeeFromSession(sessionId).getId();
-        List<Visit> visits = visitService.getVisitsByEmployeeId(visitsByDate, employeeId);
+        List<Visit> visits = visitService.getVisitsByEmployeeId(employeeId, visitsByDate);
         return department
-                .data("visits", visits)
-                .data("selected-date", date);
+                .data("selected-date", date)
+                .data("visits", visits);
     }
 }
