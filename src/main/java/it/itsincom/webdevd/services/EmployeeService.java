@@ -1,6 +1,7 @@
 package it.itsincom.webdevd.services;
 
 import it.itsincom.webdevd.models.Employee;
+import it.itsincom.webdevd.models.enums.Department;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -11,6 +12,8 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 @ApplicationScoped
 public class EmployeeService {
@@ -40,6 +43,21 @@ public class EmployeeService {
         return new String[]{"401", "Email o password errati. Riprova."};
     }
 
+    public List<Employee> getNoReceptionEmployees() {
+        List<Employee> employees = new ArrayList<>();
+        try (Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH), StandardCharsets.UTF_8);
+             CSVParser csvParser = CSVParser.parse(reader, CSV_FORMAT_READ)) {
+            for (CSVRecord record : csvParser) {
+                if (!record.get("department").equals(Department.PORTINERIA.toString())) {
+                    employees.add(parseRecord(record));
+                }
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+        return employees;
+    }
+
     public Employee getEmployeeFromStringArray(String[] array) {
         return new Employee(
                 array[0],
@@ -63,5 +81,15 @@ public class EmployeeService {
             System.err.println(e.getMessage());
         }
         return null;
+    }
+
+    private Employee parseRecord(CSVRecord record) {
+        int id = Integer.parseInt(record.get("id"));
+        String firstName = record.get("first_name");
+        String lastName = record.get("last_name");
+        String email = record.get("email");
+        String password = record.get("password");
+        String department = record.get("department");
+        return new Employee(id, firstName, lastName, email, password, Department.valueOf(department));
     }
 }

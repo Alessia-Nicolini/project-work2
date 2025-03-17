@@ -8,12 +8,17 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class VisitService {
     public static final String OPERATION_SUCCESS = "Success";
+    public static final LocalTime MAX_TIME = LocalTime.of(16, 0);
+    public static final LocalTime MIN_TIME = LocalTime.of(8, 0);
+    public static final int MAX_DURATION = 120;
+    public static final int MIN_DURATION = 15;
     private static final int BADGE_MAX_LATE = 15;
 
     private final VisitRepository visitRepository;
@@ -76,6 +81,24 @@ public class VisitService {
         if (visit.getBadgeCode() != null) {
             badgeRepository.releaseBadge(visit.getBadgeCode());
         }
+        return OPERATION_SUCCESS;
+    }
+
+    public String addVisit(int visitorId, int employeeId, LocalDateTime start, int expectedDuration) {
+        // TODO Controllare che l'id del visitatore esista.
+        // TODO Controllare che l'id del dipendente esista.
+        //  Attenzione: il dipendente non deve essere del dipartimento PORTINERIA.
+        // TODO Salvare 'start' in due variabili:
+        //   LocalDate startDate = start.toLocalDate();
+        //   LocalTime startTime = start.toLocalTime();
+        // TODO Controllare che 'startDate' sia un giorno dopo 'LocalDate.now()'.
+        // TODO Controllare che 'startTime' sia compreso tra 'MAX_TIME' e 'MIN_TIME' (controllare costanti in alto).
+        // TODO Controllare che 'expectedDuration' sia sia compreso tra 'MAX_DURATION' e 'MIN_DURATION'.
+
+        // TODO Per ogni controllo fallito, ritornare una stringa d'errore, come nei metodi sopra: 'assignBadge()', 'endVisit()'.
+        // TODO Se non ci sono errori, creare un oggetto Visit e metterlo al posto di null.
+        //   Attenzione: l'id della visita deve essere l'id dell'ultima visita salvata su file + 1.
+        visitRepository.addVisit(null);
         return OPERATION_SUCCESS;
     }
 }
