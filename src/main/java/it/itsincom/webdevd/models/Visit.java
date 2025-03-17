@@ -5,18 +5,18 @@ import java.time.LocalDateTime;
 
 public class Visit {
     private final int id;
-    private final String visitorName;
-    private final String employeeName;
+    private final int visitorId;
+    private final int employeeId;
     private final LocalDateTime start;
     private final int expectedDuration;
     private LocalDateTime end;
     private String badgeCode;
     private Status status;
 
-    public Visit(int id, String visitorName, String employeeName, LocalDateTime start, int expectedDuration, LocalDateTime end, String badgeCode, Status status) {
+    public Visit(int id, int visitorId, int employeeId, LocalDateTime start, int expectedDuration, LocalDateTime end, String badgeCode, Status status) {
         this.id = id;
-        this.visitorName = visitorName;
-        this.employeeName = employeeName;
+        this.visitorId = visitorId;
+        this.employeeId = employeeId;
         this.start = start;
         this.expectedDuration = expectedDuration;
         this.end = end;
@@ -28,12 +28,12 @@ public class Visit {
         return id;
     }
 
-    public String getVisitorName() {
-        return visitorName;
+    public int getVisitorId() {
+        return visitorId;
     }
 
-    public String getEmployeeName() {
-        return employeeName;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
     public LocalDateTime getStart() {
