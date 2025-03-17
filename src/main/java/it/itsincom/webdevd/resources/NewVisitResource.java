@@ -36,7 +36,7 @@ public class NewVisitResource {
     ) {
 
 
-        String FILE_PATH = "data/visit.csv";
+        String FILE_PATH = "data/visits.csv";
         LocalTime end = start.plusMinutes(duration);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             writer.write(mail + "," + date + "," + start + "," + end);

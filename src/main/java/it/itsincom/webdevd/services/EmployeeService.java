@@ -12,7 +12,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-
 @ApplicationScoped
 public class EmployeeService {
     private static final String FILE_PATH = "data/employees.csv";
@@ -50,5 +49,19 @@ public class EmployeeService {
                 array[4],
                 array[5]
         );
+    }
+
+    public String getNameById(int id) {
+        try (Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH), StandardCharsets.UTF_8);
+             CSVParser parser = CSVParser.parse(reader, CSV_FORMAT_READ)) {
+            for (CSVRecord record : parser) {
+                if (record.get("id").equals(String.valueOf(id))) {
+                    return record.get("first_name") + " " + record.get("last_name");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
     }
 }
