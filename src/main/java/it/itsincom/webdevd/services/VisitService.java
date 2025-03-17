@@ -32,6 +32,12 @@ public class VisitService {
                 .collect(Collectors.toList());
     }
 
+    public List<Visit> getVisitsByEmployeeId(List<Visit> visits, int employeeId) {
+        return visits.stream()
+                .filter(v -> v.getEmployeeId() == employeeId)
+                .collect(Collectors.toList());
+    }
+
     public String assignBadge(int visitId) {
         Visit visit = visitRepository.getVisitById(visitId);
         if (visit == null) {
@@ -74,6 +80,4 @@ public class VisitService {
         }
         return OPERATION_SUCCESS;
     }
-
-//    public
 }
