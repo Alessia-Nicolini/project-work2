@@ -1,3 +1,5 @@
+/* ------ GENERAL ------ */
+
 :root {
     --primary: #382673;
     --secondary: #F0F8FF;
@@ -6,6 +8,7 @@
     --success: #2E8B57;
     --error: #CA2A22;
     --error-container: #540004;
+    --logout: #A2221B;
 }
 
 * {
@@ -37,6 +40,8 @@ span {
     font-weight: 700;
     color: var(--tertiary);
 }
+
+/* ------ LOGIN ------ */
 
 #l-body {
     background-color: var(--quaternary);
@@ -83,7 +88,7 @@ span {
 
 #l-err-canc {
     width: 1.5rem;
-    margin-left: 1rem;
+    margin-left: .7rem;
     transition: 150ms ease-out;
 }
 #l-err-canc:hover {
@@ -158,4 +163,85 @@ span {
 #l-form button:active {
     transition: 100ms ease-out;
     filter: brightness(1.2);
+}
+
+/* ------ DASHBOARD ------ */
+
+#d-header {
+    padding: 0 8rem;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#d-title {
+    font-size: 3rem;
+}
+
+#d-badges-container {
+    padding: 0.3rem 1rem;
+    margin-left: 30rem;
+    border-radius: .6rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    background-color: var(--quaternary);
+}
+
+#d-badges-icon {
+    width: 2.5rem;
+    margin-right: 1rem;
+}
+
+#d-badges-stats {
+    color: var(--tertiary);
+    cursor: default;
+}
+
+#d-logout {
+    padding: .85rem 1.85rem;
+    border-radius: .6rem;
+    font-size: 1.2rem;
+    text-decoration: none;
+    background-color: var(--logout);
+    color: var(--secondary);
+    transition: 300ms ease-out;
+}
+#d-logout:hover {
+    filter: brightness(1.1);
+}
+#d-logout:active {
+    transition: 100ms ease-out;
+    filter: brightness(1.2);
+}
+
+#d-err-cont {
+    width: 17rem;
+    padding: 1rem 1.3rem;
+    margin-top: 1.6rem;
+    outline: .0625rem solid var(--error);
+    border-radius: .5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--error-container);
+}
+
+#d-err-msg {
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+#d-err-canc {
+    width: 1.5rem;
+    margin-left: .7rem;
+    transition: 150ms ease-out;
+}
+#d-err-canc:hover {
+    filter: brightness(0.8);
+}
+#d-err-canc:active {
+    transition: 100ms ease-out;
+    filter: brightness(0.6);
 }

@@ -39,7 +39,7 @@ public class ReceptionResource {
             return Response.seeOther(URI.create("/login")).build();
         }
         LocalDate date = getDate(dateStr);
-        TemplateInstance page = getReceptionTemplate(employee, date, null, null);
+        TemplateInstance page = getReceptionTemplate(date, null, null);
         return Response.ok(page).build();
     }
 
@@ -63,11 +63,10 @@ public class ReceptionResource {
         return buildErrorResponse(sessionId, dateStr, null, endingResult);
     }
 
-    private TemplateInstance getReceptionTemplate(Employee employee, LocalDate date, String assignmentError, String endingResult) {
+    private TemplateInstance getReceptionTemplate(LocalDate date, String assignmentError, String endingResult) {
         List<Visit> visits = visitService.getVisitsByDate(date);
         Map<String, Integer> badgeStats = badgeService.getBadgeStats();
         return reception
-                .data("employee", employee.getFirstName() + " " + employee.getLastName())
                 .data("visits", visits)
                 .data("badge-stats", badgeStats)
                 .data("selected-date", date)
@@ -95,7 +94,7 @@ public class ReceptionResource {
             return Response.seeOther(URI.create("/login")).build();
         }
         LocalDate date = getDate(dateStr);
-        TemplateInstance page = getReceptionTemplate(employee, date, assignmentError, endingError);
+        TemplateInstance page = getReceptionTemplate(date, assignmentError, endingError);
         return Response.status(500).entity(page).build();
     }
 }
