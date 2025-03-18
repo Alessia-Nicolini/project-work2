@@ -74,8 +74,9 @@ public class ReceptionResource {
     }
 
     private TemplateInstance getReceptionTemplate(LocalDate date, String assignmentError, String endingResult) {
-        List<Visit> visits = visitService.getVisitsByDate(date, visitRepository.getAllVisits());
         Map<String, Integer> badgeStats = badgeService.getBadgeStats();
+        List<Visit> allVisits = visitRepository.getAllVisits();
+        List<Visit> visits = visitService.getVisitsByDate(date, visitService.enrichVisitsWithNames(allVisits));
         return reception
                 .data("badge-stats", badgeStats)
                 .data("selected-date", date)

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
-public class VisitorsRepository {
+public class VisitorRepository {
     private static final String FILE_PATH = "data/visitors.csv";
     private static final String[] HEADER = {"id", "first_name", "last_name", "email", "phone"};
 
@@ -47,6 +47,20 @@ public class VisitorsRepository {
     public Visitor getVisitorById(int id) {
         Optional<Visitor> visitor = getAllVisitors().stream().filter(v -> v.getId() == id).findFirst();
         return visitor.orElse(null);
+    }
+
+    public String getNameById(int id) {
+        try (Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH), StandardCharsets.UTF_8);
+             CSVParser parser = CSVParser.parse(reader, CSV_FORMAT_READ)) {
+            for (CSVRecord record : parser) {
+                if (record.get("id").equals(String.valueOf(id))) {
+                    return record.get("first_name") + " " + record.get("last_name");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
     }
 
     public void updateVisitor(Visitor updatedVisitor) {

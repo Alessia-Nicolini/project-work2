@@ -4,6 +4,7 @@ import it.itsincom.webdevd.models.enums.Status;
 import it.itsincom.webdevd.models.Visit;
 import it.itsincom.webdevd.repositories.BadgeRepository;
 import it.itsincom.webdevd.repositories.VisitRepository;
+import it.itsincom.webdevd.repositories.VisitorRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.LocalDate;
@@ -23,10 +24,26 @@ public class VisitService {
 
     private final VisitRepository visitRepository;
     private final BadgeRepository badgeRepository;
+    private final VisitorRepository visitorRepository;
+    private final EmployeeService employeeService;
 
-    public VisitService(VisitRepository visitRepository, BadgeRepository badgeRepository) {
+    public VisitService(VisitorRepository visitorRepository,
+                        BadgeRepository badgeRepository,
+                        VisitRepository visitRepository,
+                        EmployeeService employeeService) {
         this.visitRepository = visitRepository;
         this.badgeRepository = badgeRepository;
+        this.visitorRepository = visitorRepository;
+        this.employeeService = employeeService;
+    }
+
+    public List<Visit> enrichVisitsWithNames(List<Visit> visits) {
+        return visits.stream().peek(visit -> {
+            String visitorName = visitorRepository.getNameById(visit.getVisitorId());
+            String employeeName = employeeService.getNameById(visit.getEmployeeId());
+            visit.setVisitorName(visitorName);
+            visit.setEmployeeName(employeeName);
+        }).collect(Collectors.toList());
     }
 
     public List<Visit> getVisitsByDate(LocalDate date, List<Visit> visits) {

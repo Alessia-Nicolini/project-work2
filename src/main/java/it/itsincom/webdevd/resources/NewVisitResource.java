@@ -4,7 +4,7 @@ import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import it.itsincom.webdevd.models.Employee;
 import it.itsincom.webdevd.models.Visitor;
-import it.itsincom.webdevd.repositories.VisitorsRepository;
+import it.itsincom.webdevd.repositories.VisitorRepository;
 import it.itsincom.webdevd.services.DepartmentService;
 import it.itsincom.webdevd.services.EmployeeService;
 import it.itsincom.webdevd.services.SessionService;
@@ -17,18 +17,18 @@ import java.util.List;
 public class NewVisitResource {
     private final Template newVisit;
     private final DepartmentService departmentService;
-    private final VisitorsRepository visitorsRepository;
+    private final VisitorRepository visitorRepository;
     private final SessionService sessionService;
     private final EmployeeService employeeService;
 
     public NewVisitResource(Template newVisit,
                             DepartmentService departmentService,
-                            VisitorsRepository visitorsRepository,
+                            VisitorRepository visitorRepository,
                             SessionService sessionService,
                             EmployeeService employeeService) {
         this.newVisit = newVisit;
         this.departmentService = departmentService;
-        this.visitorsRepository = visitorsRepository;
+        this.visitorRepository = visitorRepository;
         this.sessionService = sessionService;
         this.employeeService = employeeService;
     }
@@ -61,7 +61,7 @@ public class NewVisitResource {
     }
 
     private TemplateInstance getNewVisitTemplate(String sessionId) {
-        List<Visitor> visitors = visitorsRepository.getAllVisitors();
+        List<Visitor> visitors = visitorRepository.getAllVisitors();
         Employee loggedEmployee = sessionService.getEmployeeFromSession(sessionId);
         List<Employee> employees = employeeService.getNoReceptionEmployees();
         return newVisit

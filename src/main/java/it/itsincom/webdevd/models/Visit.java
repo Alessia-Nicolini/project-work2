@@ -12,6 +12,8 @@ public class Visit {
     private LocalDateTime end;
     private String badgeCode;
     private Status status;
+    private String visitorName;
+    private String employeeName;
 
     public Visit(int id,
                  int visitorId,
@@ -73,5 +75,21 @@ public class Visit {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getVisitorName() {
+        return visitorName;
+    }
+
+    public void setVisitorName(String visitorName) {
+        this.visitorName = visitorName;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 }
