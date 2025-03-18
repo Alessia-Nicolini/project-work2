@@ -63,7 +63,7 @@
                 <th>Visitatore</th>
                 <th>Dipendente</th>
                 <th>Ora d'inizio</th>
-                <th>Durata prevista (min)</th>
+                <th>Durata prevista</th>
                 <th>Stato</th>
                 <th>Badge</th>
                 <th>Azione</th>
@@ -75,7 +75,7 @@
                     <td>{visit.visitorName}</td>
                     <td>{visit.employeeName}</td>
                     <td>{visit.start.toLocalTime}</td>
-                    <td>{visit.expectedDuration}</td>
+                    <td>{visit.expectedDuration} min</td>
                     <td>
                         {#if visit.status == pending}
                             In attesa
