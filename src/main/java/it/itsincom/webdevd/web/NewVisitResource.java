@@ -6,10 +6,7 @@ import it.itsincom.webdevd.models.Visit;
 import it.itsincom.webdevd.repositories.NewVisitRepository;
 import it.itsincom.webdevd.repositories.VisitRepository;
 import it.itsincom.webdevd.services.NewVisitService;
-import jakarta.ws.rs.FormParam;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -23,20 +20,27 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static it.itsincom.webdevd.services.NewVisitService.OPERATION_SUCCESS;
 
 @Path("newVisit")
 public class NewVisitResource {
 
     private final Template newVisit;
     private final NewVisitService newVisitService;
+    private final NewVisitRepository newVisitRepository;
 
-    public NewVisitResource(Template newVisit, NewVisitService newVisitService) {
+    public NewVisitResource(Template newVisit, NewVisitService newVisitService, NewVisitRepository newVisitRepository) {
         this.newVisit = newVisit;
         this.newVisitService = newVisitService;
+        this.newVisitRepository = newVisitRepository;
     }
 
     @GET
@@ -44,27 +48,29 @@ public class NewVisitResource {
         return newVisit.instance();
     }
 
+
     @POST
-    public Response saveVisit(@FormParam("email") String email,
-                              @FormParam("date") LocalDate date,
-                              @FormParam("start") LocalTime start,
-                              @FormParam("duration") int duration) throws IOException {
+    public Response saveVisit(@QueryParam("email") String email,
+                              @QueryParam("start") LocalDateTime start,
+                              @QueryParam("answer") String answer,
+                              Visit newVisit)
+            throws IOException {
+        if (!OPERATION_SUCCESS.equals(answer)) {
+            return Response.status(400).entity("L'utente non è registrato").build();
+        }
+        LocalDate today = LocalDate.now();
+        if (start.toLocalDate().isAfter(today)) {
+            newVisitService.registerUser(email);
 
-//        newVisitService.registerUser(email);
-//        if (registerUser(email)) {
-//            LocalDate today = LocalDate.now();
-//            if (today.isBefore(date)) {
-//                NewVisitRepository.writeVisit(List<Visit> visits);
-//                return Response.seeOther(URI.create("/department.html")).build();
-//            } else {
-//                return Response.status(400).entity("Prenotare con almeno un giorno di anticipo").build();
-//            }
-//        }
-//
-//        return Response.status(400).entity("L'utente non è registrato").build();
-        return null;
+            List<Visit> visits = new ArrayList<>();
+            visits.add(newVisit);
+            newVisitRepository.writeVisit( visits );
+
+            return Response.seeOther(URI.create("/department.html")).build();
+        } else {
+            return Response.status(400).entity("Prenotare con almeno un giorno di anticipo").build();
+        }
     }
-
 }
 
 

@@ -44,7 +44,7 @@ span {
 /* ------ LOGIN ------ */
 
 #l-body {
-    background-color: var(--quaternary);
+    background-color: var(--primary);
 }
 
 #l-header {
