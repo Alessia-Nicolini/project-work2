@@ -1,8 +1,10 @@
 package it.itsincom.webdevd.models;
 
 import it.itsincom.webdevd.models.enums.Status;
-import java.time.LocalDateTime;
+import jakarta.enterprise.context.ApplicationScoped;
 
+import java.time.LocalDateTime;
+@ApplicationScoped
 public class Visit {
     private final int id;
     private final int visitorId;

@@ -1,9 +1,13 @@
 package it.itsincom.webdevd.services;
 
+import it.itsincom.webdevd.models.Employee;
+import it.itsincom.webdevd.models.Visitor;
+import it.itsincom.webdevd.models.enums.Department;
 import it.itsincom.webdevd.models.enums.Status;
 import it.itsincom.webdevd.models.Visit;
 import it.itsincom.webdevd.repositories.BadgeRepository;
 import it.itsincom.webdevd.repositories.VisitRepository;
+import it.itsincom.webdevd.repositories.VisitorsRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.LocalDate;
@@ -23,10 +27,27 @@ public class VisitService {
 
     private final VisitRepository visitRepository;
     private final BadgeRepository badgeRepository;
+    private final Employee employee;
+    private final Visitor visitor;
+    private final Visit visit;
+    private VisitorsRepository visitorsRepository;
 
-    public VisitService(VisitRepository visitRepository, BadgeRepository badgeRepository) {
+    public VisitService(VisitRepository visitRepository, BadgeRepository badgeRepository, Employee employee, Visitor visitor, Visit visit) {
         this.visitRepository = visitRepository;
         this.badgeRepository = badgeRepository;
+        this.employee = employee;
+        this.visitor = visitor;
+        this.visit = visit;
+    }
+
+    @jakarta.inject.Inject
+    public VisitService(VisitRepository visitRepository, BadgeRepository badgeRepository, Employee employee, Visitor visitor, Visit visit, VisitorsRepository visitorsRepository) {
+        this.visitRepository = visitRepository;
+        this.badgeRepository = badgeRepository;
+        this.employee = employee;
+        this.visitor = visitor;
+        this.visit = visit;
+        this.visitorsRepository = visitorsRepository;
     }
 
     public List<Visit> getVisitsByDate(LocalDate date, List<Visit> visits) {
@@ -83,22 +104,49 @@ public class VisitService {
         }
         return OPERATION_SUCCESS;
     }
-
-    public String addVisit(int visitorId, int employeeId, LocalDateTime start, int expectedDuration) {
-        // TODO Controllare che l'id del visitatore esista.
-        // TODO Controllare che l'id del dipendente esista.
-        //  Attenzione: il dipendente non deve essere del dipartimento PORTINERIA.
-        // TODO Salvare 'start' in due variabili:
-        //   LocalDate startDate = start.toLocalDate();
-        //   LocalTime startTime = start.toLocalTime();
-        // TODO Controllare che 'startDate' sia un giorno dopo 'LocalDate.now()'.
-        // TODO Controllare che 'startTime' sia compreso tra 'MAX_TIME' e 'MIN_TIME' (controllare costanti in alto).
-        // TODO Controllare che 'expectedDuration' sia sia compreso tra 'MAX_DURATION' e 'MIN_DURATION'.
-
-        // TODO Per ogni controllo fallito, ritornare una stringa d'errore, come nei metodi sopra: 'assignBadge()', 'endVisit()'.
-        // TODO Se non ci sono errori, creare un oggetto Visit e metterlo al posto di null.
-        //   Attenzione: l'id della visita deve essere l'id dell'ultima visita salvata su file + 1.
-        visitRepository.addVisit(null);
-        return OPERATION_SUCCESS;
-    }
 }
+
+//    public String addVisit(int visitorId, int employeeId, LocalDateTime start, int expectedDuration,LocalDateTime end) {
+//
+//        if (visitorsRepository.getVisitorById(int id) == null){
+//            return "Il visitatore non esiste.";
+//        }
+//        if (employee.getId() == null){
+//            return "Il dipendente non esiste.";
+//        }
+//        if (department.equals("PORTINERIA")) {
+//            return "Errore: Il dipendente non può essere del dipartimento PORTINERIA.";
+//        }
+//
+//        Department department = employee.getDepartment();
+//
+//        // TODO Controllare che l'id del visitatore esista.
+//        // TODO Controllare che l'id del dipendente esista.
+//        //  Attenzione: il dipendente non deve essere del dipartimento PORTINERIA.
+//
+//        LocalDate startDate = start.toLocalDate();
+//        LocalTime startTime = start.toLocalTime();
+//        if (!LocalDate.now().isBefore(startDate)){
+//            return "Errore: La visita deve essere programmata almeno per il giorno successivo.";
+//        }
+//        if (startTime.isBefore(MIN_TIME) || startTime.isAfter(MAX_TIME)) {
+//            return "L'orario della visita deve essere tra " + MIN_TIME + " e " + MAX_TIME + ".";
+//        }
+//        if (expectedDuration < MIN_DURATION || expectedDuration > MAX_DURATION) {
+//            return "La durata della visita deve essere tra " + MIN_DURATION + " e " + MAX_DURATION + " minuti.";
+//        }
+//        int visitId= visit.getId()+1;
+//        Visit newVisit = new Visit(visitId, visitorId, employeeId, start, expectedDuration, end, null,Status.IN_ATTESA);
+//        visitRepository.addVisit(newVisit);
+//        return OPERATION_SUCCESS;
+//    }
+//}
+//// TODO Salvare 'start' in due variabili:
+////   LocalDate startDate = start.toLocalDate();
+////   LocalTime startTime = start.toLocalTime();
+//// TODO Controllare che 'startDate' sia un giorno dopo 'LocalDate.now()'.
+////        // TODO Controllare che 'startTime' sia compreso tra 'MAX_TIME' e 'MIN_TIME' (controllare costanti in alto).
+//// TODO Controllare che 'expectedDuration' sia compreso tra 'MAX_DURATION' e 'MIN_DURATION'.
+//// TODO Per ogni controllo fallito, ritornare una stringa d'errore, come nei metodi sopra: 'assignBadge()', 'endVisit()'.
+////  TODO Se non ci sono errori, creare un oggetto Visit e metterlo al posto di null.
+////   Attenzione: l'id della visita deve essere l'id dell'ultima visita salvata su file + 1.

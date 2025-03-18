@@ -1,5 +1,8 @@
 package it.itsincom.webdevd.models;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class Visitor {
     private final int id;
     private final String first_name;

@@ -4,13 +4,16 @@ import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import it.itsincom.webdevd.models.Employee;
 import it.itsincom.webdevd.models.Visitor;
+import it.itsincom.webdevd.models.enums.Status;
 import it.itsincom.webdevd.repositories.VisitorsRepository;
 import it.itsincom.webdevd.services.DepartmentService;
 import it.itsincom.webdevd.services.EmployeeService;
 import it.itsincom.webdevd.services.SessionService;
+import it.itsincom.webdevd.services.VisitService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Path("newVisit")
@@ -20,17 +23,19 @@ public class NewVisitResource {
     private final VisitorsRepository visitorsRepository;
     private final SessionService sessionService;
     private final EmployeeService employeeService;
+    private final VisitService visitService;
 
     public NewVisitResource(Template newVisit,
                             DepartmentService departmentService,
                             VisitorsRepository visitorsRepository,
                             SessionService sessionService,
-                            EmployeeService employeeService) {
+                            EmployeeService employeeService, VisitService visitService) {
         this.newVisit = newVisit;
         this.departmentService = departmentService;
         this.visitorsRepository = visitorsRepository;
         this.sessionService = sessionService;
         this.employeeService = employeeService;
+        this.visitService = visitService;
     }
 
     @GET
@@ -48,7 +53,6 @@ public class NewVisitResource {
                                         @FormParam("employee-id") String employeeId,
                                         @FormParam("start") String start,
                                         @FormParam("expected-duration") String expectedDuration) {
-
         /*String FILE_PATH = "data/visits.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             writer.write(mail + "," + date + "," + start + "," + end);
