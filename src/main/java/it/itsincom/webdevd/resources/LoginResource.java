@@ -13,7 +13,6 @@ import java.net.URI;
 
 @Path("/login")
 public class LoginResource {
-
     private final Template login;
     private final EmployeeService employeeService;
     private final SessionService sessionService;

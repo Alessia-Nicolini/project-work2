@@ -22,8 +22,7 @@ import java.util.Optional;
 
 @ApplicationScoped
 public class VisitRepository {
-
-    private static final String CSV_FILE = "data/visits.csv";
+    private static final String FILE_PATH = "data/visits.csv";
     private static final String[] HEADER = {
             "id", "visitor_id", "employee_id", "start", "expected_duration", "end", "badge_code", "status"
     };
@@ -40,13 +39,12 @@ public class VisitRepository {
 
     public List<Visit> getAllVisits() {
         List<Visit> visits = new ArrayList<>();
-        try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE), StandardCharsets.UTF_8);
+        try (Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH), StandardCharsets.UTF_8);
              CSVParser csvParser = CSVParser.parse(reader, CSV_FORMAT_READ)) {
             for (CSVRecord record : csvParser) {
                 visits.add(parseRecord(record));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
         return visits;
@@ -75,7 +73,7 @@ public class VisitRepository {
     }
 
     private void writeAllVisits(List<Visit> visits) {
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(CSV_FILE), StandardCharsets.UTF_8);
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILE_PATH), StandardCharsets.UTF_8);
              CSVPrinter csvPrinter = new CSVPrinter(writer, CSV_FORMAT_WRITE)) {
             for (Visit visit : visits) {
                 csvPrinter.printRecord(
@@ -90,8 +88,7 @@ public class VisitRepository {
                 );
             }
             csvPrinter.flush();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }

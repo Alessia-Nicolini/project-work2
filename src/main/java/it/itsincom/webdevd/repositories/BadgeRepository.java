@@ -18,7 +18,6 @@ import java.util.List;
 
 @ApplicationScoped
 public class BadgeRepository {
-
     private static final String FILE_PATH = "data/badges.csv";
     private static final String[] HEADER = {"code", "is_available"};
 
@@ -40,8 +39,7 @@ public class BadgeRepository {
                 boolean available = "1".equals(record.get("is_available"));
                 badges.add(new Badge(code, available));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
         return badges;

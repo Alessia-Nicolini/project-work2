@@ -5,7 +5,6 @@ import it.itsincom.webdevd.models.enums.Department;
 import java.util.Objects;
 
 public class Employee {
-
     private final int id;
     private final String firstName;
     private final String lastName;
@@ -23,12 +22,7 @@ public class Employee {
     }
 
     public Employee(String id, String firstName, String lastName, String email, String password, String department) {
-        this.id = Integer.parseInt(id);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.department = Department.valueOf(department);
+        this(Integer.parseInt(id), firstName, lastName, email, password, Department.valueOf(department));
     }
 
     public int getId() {

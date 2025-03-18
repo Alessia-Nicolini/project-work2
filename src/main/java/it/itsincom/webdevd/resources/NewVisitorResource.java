@@ -1,7 +1,6 @@
-package it.itsincom.webdevd.web;
+package it.itsincom.webdevd.resources;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import java.io.*;
@@ -11,7 +10,6 @@ import java.nio.file.Paths;
 
 @Path("newVisitor")
 public class NewVisitorResource {
-
     private static final String FILE_PATH = "data/visitors.csv";
 
     private final Template newVisitor;
@@ -44,9 +42,7 @@ public class NewVisitorResource {
 
         if (isVisitorAlreadyRegistered(name, surname, phone, email)) {
             messaggioErrore = "Il visitatore è già registrato!";
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(newVisitor.data("message", messaggioErrore))
-                    .build();
+            return Response.seeOther(URI.create("department")).entity(newVisitor.data("visitorConfermation", "Visitatore Salvato")).build();
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
