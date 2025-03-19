@@ -2,7 +2,6 @@ package it.itsincom.webdevd.resources;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import it.itsincom.webdevd.models.Employee;
 import it.itsincom.webdevd.models.Visit;
 import it.itsincom.webdevd.services.AllDepartmentsService;
 import it.itsincom.webdevd.services.SessionService;

@@ -1,12 +1,10 @@
 package it.itsincom.webdevd.service;
 
-import it.itsincom.webdevd.repositories.VisitRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import it.itsincom.webdevd.model.Visit;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.jboss.logging.Logger;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
