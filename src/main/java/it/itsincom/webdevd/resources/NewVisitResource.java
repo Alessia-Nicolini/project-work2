@@ -2,52 +2,73 @@ package it.itsincom.webdevd.resources;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import jakarta.ws.rs.FormParam;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
+import it.itsincom.webdevd.models.Employee;
+import it.itsincom.webdevd.models.Visitor;
+import it.itsincom.webdevd.repositories.VisitorRepository;
+import it.itsincom.webdevd.services.DepartmentService;
+import it.itsincom.webdevd.services.EmployeeService;
+import it.itsincom.webdevd.services.SessionService;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
-import java.io.*;
-import java.net.URI;
-import java.time.LocalDate;
-import java.time.LocalTime;
-
-
+import java.util.List;
 
 @Path("newVisit")
 public class NewVisitResource {
-
     private final Template newVisit;
+    private final DepartmentService departmentService;
+    private final VisitorRepository visitorRepository;
+    private final SessionService sessionService;
+    private final EmployeeService employeeService;
 
-    public NewVisitResource(Template newVisit) {
+    public NewVisitResource(Template newVisit,
+                            DepartmentService departmentService,
+                            VisitorRepository visitorRepository,
+                            SessionService sessionService,
+                            EmployeeService employeeService) {
         this.newVisit = newVisit;
+        this.departmentService = departmentService;
+        this.visitorRepository = visitorRepository;
+        this.sessionService = sessionService;
+        this.employeeService = employeeService;
     }
 
     @GET
-    public TemplateInstance showVisit() {
-        return newVisit.instance();
+    public Response showNewVisitPage(@CookieParam(SessionService.SESSION_COOKIE_NAME) String sessionId) {
+        Response response = departmentService.checkSession(sessionId);
+        if (response != null) {
+            return response;
+        }
+        TemplateInstance page = getNewVisitTemplate(sessionId);
+        return Response.ok(page).build();
     }
 
     @POST
-    public Response writeVisit(@FormParam("mail") String mail,
-                               @FormParam("date") LocalDate date,
-                               @FormParam("start") LocalTime start,
-                               @FormParam("duration") int duration
-    ) {
+    public Response processRegistration(@FormParam("visitor-id") String visitorId,
+                                        @FormParam("employee-id") String employeeId,
+                                        @FormParam("start") String start,
+                                        @FormParam("expected-duration") String expectedDuration) {
 
-
-        String FILE_PATH = "data/visit.csv";
-        LocalTime end = start.plusMinutes(duration);
+        /*String FILE_PATH = "data/visits.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             writer.write(mail + "," + date + "," + start + "," + end);
             writer.newLine();
             return Response.seeOther(URI.create("department")).entity(newVisit.data("visitConfermation", "Visita Salvata")).build();
         } catch (IOException e) {
             return Response.status(500).entity("Errore nel salvataggio dei dati").build();
-        }
+        }*/
+        return null;
     }
 
+    private TemplateInstance getNewVisitTemplate(String sessionId) {
+        List<Visitor> visitors = visitorRepository.getAllVisitors();
+        Employee loggedEmployee = sessionService.getEmployeeFromSession(sessionId);
+        List<Employee> employees = employeeService.getNoReceptionEmployees();
+        return newVisit
+                .data("visitors", visitors)
+                .data("logged-employee", loggedEmployee)
+                .data("employees", employees);
+    }
 }
 
 

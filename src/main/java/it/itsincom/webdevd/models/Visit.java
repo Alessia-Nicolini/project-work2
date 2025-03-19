@@ -1,8 +1,10 @@
 package it.itsincom.webdevd.models;
 
 import it.itsincom.webdevd.models.enums.Status;
-import java.time.LocalDateTime;
+import jakarta.enterprise.context.ApplicationScoped;
 
+import java.time.LocalDateTime;
+@ApplicationScoped
 public class Visit {
     private final int id;
     private final int visitorId;
@@ -12,8 +14,17 @@ public class Visit {
     private LocalDateTime end;
     private String badgeCode;
     private Status status;
+    private String visitorName;
+    private String employeeName;
 
-    public Visit(int id, int visitorId, int employeeId, LocalDateTime start, int expectedDuration, LocalDateTime end, String badgeCode, Status status) {
+    public Visit(int id,
+                 int visitorId,
+                 int employeeId,
+                 LocalDateTime start,
+                 int expectedDuration,
+                 LocalDateTime end,
+                 String badgeCode,
+                 Status status) {
         this.id = id;
         this.visitorId = visitorId;
         this.employeeId = employeeId;
@@ -66,5 +77,21 @@ public class Visit {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getVisitorName() {
+        return visitorName;
+    }
+
+    public void setVisitorName(String visitorName) {
+        this.visitorName = visitorName;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 }

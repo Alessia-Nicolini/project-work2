@@ -1,8 +1,3 @@
-Alessandro Limongi,ggg,2112121,ffewfwe@gmail.com
-Alessandro Limongi,ggg,12121212,alessandro.limongi@itsincom.it
-Alessandro Limongi,rwrtrew,436546635653,alessandro.limongi@itsincom.it
-Alessandro Limongi,ggg,2354542,alessandro.limongi@itsincom
-Alessandro Limongi,rwrtrew,12121212,alessandro.limongi@itsincom.it
-Alessandro,Limongi,3312388230,alessandro.limongi.15@gmail.com
-ale,lll,848484,giovanni.rossi@example.com
-www,ww,123123123,giovanni.rossi@example.com
+id,first_name,last_name,email,phone
+1,Alessandro,Limongi,alessandro.limongi@itsincom.it,1112223333
+2,Rabbi,Hossain,rabbi.hossain@itsincom.it,4445556666

@@ -22,7 +22,6 @@ import java.util.Optional;
 
 @ApplicationScoped
 public class VisitRepository {
-
     private static final String FILE_PATH = "data/visits.csv";
     private static final String[] HEADER = {
             "id", "visitor_id", "employee_id", "start", "expected_duration", "end", "badge_code", "status"
@@ -45,8 +44,7 @@ public class VisitRepository {
             for (CSVRecord record : csvParser) {
                 visits.add(parseRecord(record));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
         return visits;
@@ -90,8 +88,7 @@ public class VisitRepository {
                 );
             }
             csvPrinter.flush();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }

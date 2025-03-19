@@ -1,41 +1,73 @@
 package it.itsincom.webdevd.services;
 
+import it.itsincom.webdevd.models.Employee;
+import it.itsincom.webdevd.models.enums.Department;
 import it.itsincom.webdevd.models.enums.Status;
 import it.itsincom.webdevd.models.Visit;
 import it.itsincom.webdevd.repositories.BadgeRepository;
+import it.itsincom.webdevd.repositories.EmployeeRepository;
 import it.itsincom.webdevd.repositories.VisitRepository;
+import it.itsincom.webdevd.repositories.VisitorRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class VisitService {
-
     public static final String OPERATION_SUCCESS = "Success";
+    public static final LocalTime MAX_TIME = LocalTime.of(16, 0);
+    public static final LocalTime MIN_TIME = LocalTime.of(8, 0);
+    public static final int MAX_DURATION = 120;
+    public static final int MIN_DURATION = 15;
     private static final int BADGE_MAX_LATE = 15;
 
     private final VisitRepository visitRepository;
     private final BadgeRepository badgeRepository;
+    private final VisitorRepository visitorRepository;
+    private final EmployeeService employeeService;
+    private final EmployeeRepository employeeRepository;
+    private final Employee employee;
+    private final Visit visit;
 
-    public VisitService(VisitRepository visitRepository, BadgeRepository badgeRepository) {
+    public VisitService(VisitorRepository visitorRepository,
+                        BadgeRepository badgeRepository,
+                        VisitRepository visitRepository,
+                        EmployeeService employeeService,
+                        EmployeeRepository employeeRepository,
+                        Employee employee,
+                        Visit visit) {
         this.visitRepository = visitRepository;
         this.badgeRepository = badgeRepository;
+        this.visitorRepository = visitorRepository;
+        this.employeeService = employeeService;
+        this.employeeRepository = employeeRepository;
+        this.employee = employee;
+        this.visit = visit;
     }
 
-    public List<Visit> getVisitsByDate(LocalDate date) {
-        return visitRepository.getAllVisits()
-                .stream()
+    public List<Visit> getVisitsByDate(LocalDate date, List<Visit> visits) {
+        return visits.stream()
                 .filter(v -> v.getStart().toLocalDate().equals(date))
                 .collect(Collectors.toList());
     }
 
-    public List<Visit> getVisitsByEmployeeId(List<Visit> visits, int employeeId) {
+    public List<Visit> getVisitsByEmployeeId(int employeeId, List<Visit> visits) {
         return visits.stream()
                 .filter(v -> v.getEmployeeId() == employeeId)
                 .collect(Collectors.toList());
+    }
+
+    public List<Visit> enrichVisitsWithNames(List<Visit> visits) {
+        return visits.stream().peek(visit -> {
+            String visitorName = visitorRepository.getNameById(visit.getVisitorId());
+            String employeeName = employeeService.getNameById(visit.getEmployeeId());
+            visit.setVisitorName(visitorName);
+            visit.setEmployeeName(employeeName);
+        }).collect(Collectors.toList());
     }
 
     public String assignBadge(int visitId) {
@@ -78,6 +110,35 @@ public class VisitService {
         if (visit.getBadgeCode() != null) {
             badgeRepository.releaseBadge(visit.getBadgeCode());
         }
+        return OPERATION_SUCCESS;
+    }
+
+
+    public String addVisit(int visitorId, int employeeId, LocalDateTime start, int expectedDuration) {
+        if (visitorRepository.getVisitorById(visitorId) == null) {
+            return "Il visitatore non esiste.";
+        }
+        if (employeeRepository.getEmployeeById(employeeId) == null) {
+            return "Il dipendente non esiste.";
+        }
+        Department department = employee.getDepartment();
+        if (Department.PORTINERIA.equals(department)) {
+            return "Il dipendente non può essere del dipartimento PORTINERIA.";
+        }
+        LocalDate startDate = start.toLocalDate();
+        LocalTime startTime = start.toLocalTime();
+        if (!LocalDate.now().isBefore(startDate)) {
+            return "Errore: La visita deve essere programmata almeno per il giorno successivo.";
+        }
+        if (startTime.isBefore(MIN_TIME) || startTime.isAfter(MAX_TIME)) {
+            return "L'orario della visita deve essere tra " + MIN_TIME + " e " + MAX_TIME + ".";
+        }
+        if (expectedDuration < MIN_DURATION || expectedDuration > MAX_DURATION) {
+            return "La durata della visita deve essere tra " + MIN_DURATION + " e " + MAX_DURATION + " minuti.";
+        }
+        int visitId = visit.getId() + 1;
+        Visit newVisit = new Visit(visitId, visitorId, employeeId, start, expectedDuration, null, null, Status.IN_ATTESA);
+        visitRepository.addVisit(newVisit);
         return OPERATION_SUCCESS;
     }
 }

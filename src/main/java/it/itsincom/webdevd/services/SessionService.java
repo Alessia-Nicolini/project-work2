@@ -11,7 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
 public class SessionService {
-
     public static final String SESSION_COOKIE_NAME = "session";
     private static final int SESSION_MAX_AGE = 3600;
 

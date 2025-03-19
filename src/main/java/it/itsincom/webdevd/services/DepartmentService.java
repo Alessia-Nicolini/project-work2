@@ -10,11 +10,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 @ApplicationScoped
-public class AllDepartmentsService {
-
+public class DepartmentService {
     private final SessionService sessionService;
 
-    public AllDepartmentsService(SessionService sessionService) {
+    public DepartmentService(SessionService sessionService) {
         this.sessionService = sessionService;
     }
 
@@ -32,8 +31,7 @@ public class AllDepartmentsService {
         }
         try {
             return LocalDate.parse(dateStr);
-        }
-        catch (DateTimeParseException e) {
+        } catch (DateTimeParseException e) {
             return LocalDate.now();
         }
     }

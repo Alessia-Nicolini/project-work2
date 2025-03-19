@@ -11,7 +11,6 @@ import java.net.URI;
 
 @Path("/logout")
 public class LogoutResource {
-
     private final SessionService sessionService;
 
     public LogoutResource(SessionService sessionService) {

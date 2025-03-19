@@ -7,7 +7,6 @@ import java.util.Map;
 
 @ApplicationScoped
 public class BadgeService {
-
     private static final int TOTAL_BADGES = 30;
 
     private final BadgeRepository badgeRepository;
