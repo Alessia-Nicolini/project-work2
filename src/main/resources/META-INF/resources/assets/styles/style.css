@@ -104,7 +104,6 @@ span {
     width: 17rem;
     padding: 1.3rem;
     margin-top: 1.6rem;
-    outline: .0625rem solid #AF92FF88;
     border-radius: .5rem;
     display: flex;
     flex-direction: column;
@@ -302,23 +301,129 @@ span {
     filter: brightness(1.2);
 }
 
+#d-no-visits {
+    margin-top: 5rem;
+    font-size: 1.5rem;
+    color: var(--tertiary);
+}
+
 #d-visits-table-cont {
     margin-top: 3rem;
 }
 
 #d-visits-table {
     width: calc(100vw - 24rem);
-    table-layout: fixed;
+    border-collapse: collapse;
     font-size: 1rem;
     color: var(--secondary);
 }
 
+#d-visits-table thead {
+    background-color: var(--search);
+}
+
 #d-visits-table th {
+    padding: .6rem 0;
     font-weight: 700;
 }
 
 #d-visits-table td {
+    padding: .4rem 0;
     text-align: center;
+}
+
+#d-visits-table th:nth-child(1), #d-visits-table th:nth-child(2) {
+    width: 18%;
+}
+
+#d-visits-table th:nth-child(3),
+#d-visits-table th:nth-child(4),
+#d-visits-table th:nth-child(5),
+#d-visits-table th:nth-child(7) {
+    width: 14%;
+}
+
+#d-visits-table td:nth-child(1), #d-visits-table td:nth-child(2) {
+    padding: 0 1.2rem;
+    text-align: justify;
+}
+
+#d-visits-table td:nth-child(5) {
+    padding: 0 1.8rem;
+    text-align: justify;
+}
+
+#d-visits-table th:first-child {
+    border-top-left-radius: .6rem;
+}
+
+#d-visits-table th:last-child {
+    border-top-right-radius: .6rem;
+}
+
+#d-visits-table tbody tr {
+    transition: 300ms ease-out;
+}
+#d-visits-table tbody tr:nth-child(even) {
+    background-color: #322267;
+}
+#d-visits-table tbody tr:hover {
+    background-color: var(--tertiary);
+    color: var(--quaternary);
+}
+
+.d-v-status-cont {
+    display: flex;
+    align-items: center;
+}
+
+.d-v-status {
+    width: .3rem;
+    height: .3rem;
+    margin-right: .6rem;
+    border-radius: .15rem;
+    background-color: red;
+}
+
+#d-v-status-attesa {
+    background-color: #FFD400;
+    filter: drop-shadow(0 0 .2rem #FFD400);
+}
+
+#d-v-status-corso {
+    background-color: #50C878;
+    filter: drop-shadow(0 0 .2rem #50C878);
+}
+
+#d-v-status-completato {
+    background-color: #4678F0;
+    filter: drop-shadow(0 0 .2rem #4678F0);
+}
+
+.d-v-submit {
+    width: 80%;
+    padding: .2rem 0;
+    border: none;
+    border-radius: .2rem;
+    font-size: .9rem;
+    transition: 300ms ease-out;
+}
+.d-v-submit:hover {
+    filter: brightness(0.9);
+}
+.d-v-submit:active {
+    transition: 100ms ease-out;
+    filter: brightness(0.8);
+}
+
+#d-v-submit-assegna {
+    background-color: #ffee57;
+    color: #0F0700;
+}
+
+#d-v-submit-termina {
+    background-color: var(--logout);
+    color: var(--secondary);
 }
 
 /*---- new visitor (guest) ----*/
