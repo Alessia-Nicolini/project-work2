@@ -21,6 +21,7 @@ try {
 try {
     const {Calendar} = window.VanillaCalendarPro;
     const calendar = new Calendar("#date", {
+        disableWeekdays: [0, 6],
         inputMode: true,
         locale: "it-IT",
         positionToInput: "auto",
@@ -38,72 +39,38 @@ try {
 }
 
 try {
-    const today = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(today.getDate() + 1);
-
     const { Calendar } = window.VanillaCalendarPro;
     const calendar = new Calendar("#start", {
-        dateMin: tomorrow, // Ensure dateMin is set correctly
+        disableWeekdays: [0, 6],
         inputMode: true,
         locale: "it-IT",
         positionToInput: "auto",
-        onChangeToInput(self) {
-            updateInputWithTime(self);
-        },
-        selectedTheme: "dark",
         selectionTimeMode: 24,
+        timeMinHour: 8,
         timeMaxHour: 16,
-        timeMinHour: 8
+        timeStepMinute: 5,
+        onChangeToInput(self) {
+            if (self.context.inputElement && self.context.selectedDates[0]) {
+                const dateObj = new Date(self.context.selectedDates[0]);
+                if (self.context.selectedTime) {
+                    const parts = self.context.selectedTime.split(':');
+                    if (parts.length === 2) {
+                        const hours = parseInt(parts[0], 10);
+                        const minutes = parseInt(parts[1], 10);
+                        dateObj.setHours(hours, minutes);
+                    }
+                }
+                const day = ('0' + dateObj.getDate()).slice(-2);
+                const month = ('0' + (dateObj.getMonth() + 1)).slice(-2);
+                const year = dateObj.getFullYear();
+                const hours = ('0' + dateObj.getHours()).slice(-2);
+                const minutes = ('0' + dateObj.getMinutes()).slice(-2);
+                self.context.inputElement.value = `${day}/${month}/${year} ${hours}:${minutes}`;
+            }
+        },
+        selectedTheme: "dark"
     });
     calendar.init();
-
-    // Function to combine the date and time slider values
-    function updateInputWithTime(self) {
-        if (self.context.inputElement && self.context.selectedDates[0]) {
-            // Adjust the selectors below if your time slider elements have different classes
-            const hourEl = document.querySelector('.vc-time-hour');
-            const minuteEl = document.querySelector('.vc-time-minute');
-            let hours = "00", minutes = "00";
-            if (hourEl && minuteEl) {
-                hours = hourEl.value.padStart(2, '0');
-                minutes = minuteEl.value.padStart(2, '0');
-                console.log("Slider values:", hours, minutes);
-            } else {
-                console.log("Time slider elements not found. Check your selectors.");
-            }
-            // Use the date part from the current input value if available, or from selectedDates
-            const currentValue = self.context.inputElement.value;
-            const datePart = currentValue.split('T')[0] || new Date(self.context.selectedDates[0]).toISOString().split('T')[0];
-            const formattedDate = `${datePart}T${hours}:${minutes}`;
-            self.context.inputElement.value = formattedDate;
-            console.log("Updated input value:", formattedDate);
-        }
-    }
-
-    // Function to attach event listeners to time sliders
-    function attachTimeListeners() {
-        const hourEl = document.querySelector('.vc-time-hour');
-        const minuteEl = document.querySelector('.vc-time-minute');
-        if (hourEl) {
-            hourEl.addEventListener('input', () => updateInputWithTime(calendar));
-            hourEl.addEventListener('change', () => updateInputWithTime(calendar));
-        }
-        if (minuteEl) {
-            minuteEl.addEventListener('input', () => updateInputWithTime(calendar));
-            minuteEl.addEventListener('change', () => updateInputWithTime(calendar));
-        }
-    }
-
-    // Use an interval to attach listeners in case the time slider elements are rendered after initialization
-    const listenerInterval = setInterval(() => {
-        const hourEl = document.querySelector('.vc-time-hour');
-        const minuteEl = document.querySelector('.vc-time-minute');
-        if (hourEl && minuteEl) {
-            attachTimeListeners();
-            clearInterval(listenerInterval);
-        }
-    }, 500);
 } catch (e) {
     console.log(e);
 }

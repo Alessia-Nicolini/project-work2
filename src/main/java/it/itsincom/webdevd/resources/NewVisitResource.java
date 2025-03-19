@@ -12,13 +12,14 @@ import it.itsincom.webdevd.services.VisitService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
-import java.net.URI;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Path("newVisit")
 public class NewVisitResource {
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
     private final Template newVisit;
     private final DepartmentService departmentService;
     private final VisitorRepository visitorRepository;
@@ -30,7 +31,8 @@ public class NewVisitResource {
                             DepartmentService departmentService,
                             VisitorRepository visitorRepository,
                             SessionService sessionService,
-                            EmployeeService employeeService, VisitService visitService) {
+                            EmployeeService employeeService,
+                            VisitService visitService) {
         this.newVisit = newVisit;
         this.departmentService = departmentService;
         this.visitorRepository = visitorRepository;
@@ -59,7 +61,7 @@ public class NewVisitResource {
         if (response != null) {
                return response;
         }
-        String result = visitService.addVisit(Integer.parseInt(visitorId),Integer.parseInt(employeeId), LocalDateTime.parse(start),Integer.parseInt(expectedDuration));
+        String result = visitService.addVisit(Integer.parseInt(visitorId),Integer.parseInt(employeeId), LocalDateTime.parse(start, DATE_TIME_FORMATTER),Integer.parseInt(expectedDuration));
         if(result.equals(VisitService.OPERATION_SUCCESS)){
             return buildResponse(sessionId, "Visita aggiunta con successo.", null);
         }
@@ -89,8 +91,3 @@ public class NewVisitResource {
                 .data("error", error);
     }
 }
-
-
-
-
-

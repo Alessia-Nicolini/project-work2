@@ -1,4 +1,4 @@
-id,visitor_id,name,surname,employee_id,start,expected_duration,end,badge_code,status
+id,visitor_id,employee_id,start,expected_duration,end,badge_code,status
 1,1,1,2025-03-21T09:00:00,60,,,IN_ATTESA
 2,2,3,2025-03-21T10:00:00,45,,,IN_ATTESA
 3,3,3,2025-03-21T11:00:00,30,,,IN_ATTESA
