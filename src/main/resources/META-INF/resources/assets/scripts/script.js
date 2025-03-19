@@ -39,15 +39,21 @@ try {
 
 try {
     const today = new Date();
-    const {Calendar} = window.VanillaCalendarPro;
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    const formattedTomorrow = tomorrow.toISOString().slice(0, 16); // Ensure proper format if needed
+
+    const { Calendar } = window.VanillaCalendarPro;
     const calendar = new Calendar("#start", {
-        dateMin: today.setDate(today.getDate() + 1),
+        dateMin: tomorrow, // or formattedTomorrow if the plugin expects a string
         inputMode: true,
         locale: "it-IT",
         positionToInput: "auto",
         onChangeToInput(self) {
             if (self.context.inputElement && self.context.selectedDates[0]) {
-                self.context.inputElement.value = self.context.selectedDates[0];
+                const selectedDate = new Date(self.context.selectedDates[0]);
+                const formattedDate = selectedDate.toISOString().slice(0, 16); // format to "YYYY-MM-DDTHH:MM"
+                self.context.inputElement.value = formattedDate;
                 self.hide();
             }
         },
