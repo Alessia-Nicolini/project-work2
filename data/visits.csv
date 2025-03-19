@@ -1,5 +1,5 @@
-id,visitor_id,employee_id,start,expected_duration,end,badge_code,status
-1,1,1,2025-03-13T09:00:00,60,,,IN_ATTESA
+id,visitor_name,employee_name,start,expected_duration,end,badge_code,status
+1,1,1,2025-03-13T09:00:00,60,2025-03-13T12:49:52.759226,,COMPLETATO
 2,2,3,2025-03-13T10:00:00,45,2025-03-13T10:45:00,B001,COMPLETATO
 3,3,3,2025-03-13T11:00:00,30,,,IN_CORSO
 4,4,4,2025-03-13T12:00:00,90,,,IN_ATTESA
