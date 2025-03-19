@@ -30,23 +30,17 @@ public class VisitService {
     private final VisitorRepository visitorRepository;
     private final EmployeeService employeeService;
     private final EmployeeRepository employeeRepository;
-    private final Employee employee;
-    private final Visit visit;
 
     public VisitService(VisitorRepository visitorRepository,
                         BadgeRepository badgeRepository,
                         VisitRepository visitRepository,
                         EmployeeService employeeService,
-                        EmployeeRepository employeeRepository,
-                        Employee employee,
-                        Visit visit) {
+                        EmployeeRepository employeeRepository) {
         this.visitRepository = visitRepository;
         this.badgeRepository = badgeRepository;
         this.visitorRepository = visitorRepository;
         this.employeeService = employeeService;
         this.employeeRepository = employeeRepository;
-        this.employee = employee;
-        this.visit = visit;
     }
 
     public List<Visit> getVisitsByDate(LocalDate date, List<Visit> visits) {
@@ -118,7 +112,8 @@ public class VisitService {
         if (visitorRepository.getVisitorById(visitorId) == null) {
             return "Il visitatore non esiste.";
         }
-        if (employeeRepository.getEmployeeById(employeeId) == null) {
+        Employee employee = employeeRepository.getEmployeeById(employeeId);
+        if (employee == null) {
             return "Il dipendente non esiste.";
         }
         Department department = employee.getDepartment();
@@ -136,7 +131,7 @@ public class VisitService {
         if (expectedDuration < MIN_DURATION || expectedDuration > MAX_DURATION) {
             return "La durata della visita deve essere tra " + MIN_DURATION + " e " + MAX_DURATION + " minuti.";
         }
-        int visitId = visit.getId() + 1;
+        int visitId = visitRepository.getLastVisitId() + 1;
         Visit newVisit = new Visit(visitId, visitorId, employeeId, start, expectedDuration, null, null, Status.IN_ATTESA);
         visitRepository.addVisit(newVisit);
         return OPERATION_SUCCESS;
