@@ -10,6 +10,7 @@ import it.itsincom.webdevd.repositories.VisitRepository;
 import it.itsincom.webdevd.repositories.VisitorRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -124,6 +125,10 @@ public class VisitService {
         LocalTime startTime = start.toLocalTime();
         if (!LocalDate.now().isBefore(startDate)) {
             return "La visita deve essere programmata almeno per il giorno successivo.";
+        }
+        DayOfWeek dayOfWeek = startDate.getDayOfWeek();
+        if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+            return "Il giorno della visita deve essere tra Lunedì e Venerdì";
         }
         if (startTime.isBefore(MIN_TIME) || startTime.isAfter(MAX_TIME)) {
             return "L'orario della visita deve essere tra " + MIN_TIME + " e " + MAX_TIME + ".";
