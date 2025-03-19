@@ -85,7 +85,7 @@ public class VisitRepository {
         writeAllVisits(visits);
     }
 
-    private void writeAllVisits(List<Visit> visits) {
+    public void writeAllVisits(List<Visit> visits) {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILE_PATH), StandardCharsets.UTF_8);
              CSVPrinter csvPrinter = new CSVPrinter(writer, CSV_FORMAT_WRITE)) {
             for (Visit visit : visits) {
