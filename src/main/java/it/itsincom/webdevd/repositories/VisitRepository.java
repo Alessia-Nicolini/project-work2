@@ -55,6 +55,19 @@ public class VisitRepository {
         return visit.orElse(null);
     }
 
+    public int getLastVisitId() {
+        int id = 0;
+        try (Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH), StandardCharsets.UTF_8);
+             CSVParser csvParser = CSVParser.parse(reader, CSV_FORMAT_READ)) {
+            for (CSVRecord record : csvParser) {
+                id = Integer.parseInt(record.get("id"));
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+        return id;
+    }
+
     public void updateVisit(Visit updatedVisit) {
         List<Visit> visits = getAllVisits();
         for (int i = 0; i < visits.size(); i++) {
