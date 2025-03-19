@@ -5,7 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.Objects;
 
-@ApplicationScoped
+
 public class Employee {
     private final int id;
     private final String firstName;
