@@ -136,4 +136,14 @@ public class VisitService {
         visitRepository.addVisit(newVisit);
         return OPERATION_SUCCESS;
     }
+    public boolean deleteVisitById(int visitId) {
+        List<Visit> visits = visitRepository.getAllVisits();
+        boolean removed = visits.removeIf(v -> v.getId() == visitId);
+
+        if (removed) {
+            visitRepository.writeAllVisits(visits);
+        }
+
+        return removed;
+    }
 }

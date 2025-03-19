@@ -10,6 +10,7 @@ import it.itsincom.webdevd.services.VisitService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -52,5 +53,23 @@ public class DepartmentResource {
         return department
                 .data("selected-date", date)
                 .data("visits", visits);
+    }
+
+    @POST
+    @Path("/delete")
+    public Response deleteVisit(@FormParam("visitId") int visitId,
+                                @CookieParam(SessionService.SESSION_COOKIE_NAME) String sessionId) {
+        Response response = departmentService.checkSession(sessionId);
+        if (response != null) {
+            return response;
+        }
+
+        boolean deleted = visitService.deleteVisitById(visitId);
+        TemplateInstance page = getDepartmentTemplate(LocalDate.now(), sessionId);
+        if (deleted) {
+            return Response.seeOther(URI.create("/department")).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 }
