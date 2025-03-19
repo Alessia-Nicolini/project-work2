@@ -45,6 +45,8 @@
     </style>
 </head>
 <body>
+{success}
+{error}
 <div class="visit-conteiner">
 <h1>Aggiungi una nuova visita:</h1>
 <form action="/newVisit" method="post">
@@ -67,7 +69,7 @@
         {/for}
     </select>
     <label for="start">Inserisci la data</label>
-    <input type="date" id="start" name="start" required readonly>
+    <input type="datetime-local" id="start" name="start" required readonly>
 
     <label for="expected-duration">Inserisci la durata della visita in minuti:</label>
     <input type="number" id="expected-duration" name="expected-duration" min="15" max="120" required>

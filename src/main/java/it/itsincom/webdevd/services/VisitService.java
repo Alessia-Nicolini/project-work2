@@ -123,7 +123,7 @@ public class VisitService {
         LocalDate startDate = start.toLocalDate();
         LocalTime startTime = start.toLocalTime();
         if (!LocalDate.now().isBefore(startDate)) {
-            return "Errore: La visita deve essere programmata almeno per il giorno successivo.";
+            return "La visita deve essere programmata almeno per il giorno successivo.";
         }
         if (startTime.isBefore(MIN_TIME) || startTime.isAfter(MAX_TIME)) {
             return "L'orario della visita deve essere tra " + MIN_TIME + " e " + MAX_TIME + ".";
