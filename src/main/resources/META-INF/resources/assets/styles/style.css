@@ -45,7 +45,7 @@ span {
 /* ------ LOGIN ------ */
 
 #l-body {
-    background-color: var(--quaternary);
+    background-color: var(--primary);
 }
 
 #l-header {
@@ -108,7 +108,7 @@ span {
     border-radius: .5rem;
     display: flex;
     flex-direction: column;
-    background-color: var(--primary);
+    background-color: var(--quaternary);
 }
 
 .l-form-field {
@@ -134,7 +134,7 @@ span {
     border-radius: .3rem;
     outline: 0.0625rem solid #AF92FF88;
     font-size: 1rem;
-    background-color: var(--quaternary);
+    background-color: var(--primary);
     color: var(--secondary);
     transition: 100ms ease-out;
 }
@@ -318,5 +318,383 @@ span {
 }
 
 #d-visits-table td {
+    text-align: center;
+}
+
+/*---- new visitor (guest) ----*/
+#g-body {
+    background-color: var(--primary);
+}
+
+#g-header {
+    margin-top: 2rem;
+}
+
+#g-title {
+    font-size: 3rem;
+    text-align: center;
+}
+
+#g-form-section {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#g-section-title {
+    font-size: 1.7rem;
+    text-align: center;
+    color: var(--secondary);
+}
+
+#g-form {
+    width: 17rem;
+    padding: 1.3rem;
+    margin-top: 1.6rem;
+    outline: .0625rem solid #AF92FF88;
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--quaternary);
+}
+
+.g-form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.g-label-cont {
+    display: flex;
+    justify-content: space-between;
+}
+
+#g-form label {
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+#g-form input {
+    width: 15.47rem;
+    padding: .4rem .75rem;
+    margin: .5rem 0 1.25rem 0;
+    border: none;
+    border-radius: .3rem;
+    outline: 0.0625rem solid #AF92FF88;
+    font-size: 1rem;
+    background-color: var(--primary);
+    color: var(--secondary);
+    transition: 100ms ease-out;
+}
+#g-form input:focus {
+    outline: 0.13rem solid var(--tertiary);
+}
+
+#g-form button {
+    padding: .4rem .75rem;
+    border: none;
+    border-radius: .3rem;
+    font-size: 1rem;
+    background-color: var(--success);
+    color: var(--secondary);
+    transition: 300ms ease-out;
+}
+#g-form button:hover {
+    filter: brightness(1.1);
+}
+#g-form button:active {
+    transition: 100ms ease-out;
+    filter: brightness(1.2);
+}
+
+#g-logout {
+    padding: .85rem 1.85rem;
+    border-radius: .6rem;
+    font-size: 1.2rem;
+    text-decoration: none;
+    background-color: var(--logout);
+    color: var(--secondary);
+    transition: 300ms ease-out;
+}
+#g-logout:hover {
+    filter: brightness(1.1);
+}
+#g-logout:active {
+    transition: 100ms ease-out;
+    filter: brightness(1.2);
+}
+
+/*---- new visit ----*/
+#v-body {
+    background-color: var(--primary);
+}
+
+#v-header {
+    margin-top: 2rem;
+}
+
+#v-title {
+    font-size: 3rem;
+    text-align: center;
+}
+
+#v-form-section {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#v-section-title {
+    font-size: 1.7rem;
+    text-align: center;
+    color: var(--secondary);
+}
+
+#v-form {
+    width: 17rem;
+    padding: 1.3rem;
+    margin-top: 1.6rem;
+    outline: .0625rem solid #AF92FF88;
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--quaternary);
+}
+
+.v-form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.v-label-cont {
+    display: flex;
+    justify-content: space-between;
+}
+
+#v-form label {
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+#v-form input {
+    width: 15.47rem;
+    padding: .4rem .75rem;
+    margin: .5rem 0 1.25rem 0;
+    border: none;
+    border-radius: .3rem;
+    outline: 0.0625rem solid #AF92FF88;
+    font-size: 1rem;
+    background-color: var(--primary);
+    color: var(--secondary);
+    transition: 100ms ease-out;
+}
+#v-form input:focus {
+    outline: 0.13rem solid var(--tertiary);
+}
+
+#v-form button {
+    padding: .4rem .75rem;
+    border: none;
+    border-radius: .3rem;
+    font-size: 1rem;
+    background-color: var(--success);
+    color: var(--secondary);
+    transition: 300ms ease-out;
+}
+#v-form button:hover {
+    filter: brightness(1.1);
+}
+#v-form button:active {
+    transition: 100ms ease-out;
+    filter: brightness(1.2);
+}
+
+#v-logout {
+    padding: .85rem 1.85rem;
+    border-radius: .6rem;
+    font-size: 1.2rem;
+    text-decoration: none;
+    background-color: var(--logout);
+    color: var(--secondary);
+    transition: 300ms ease-out;
+}
+#v-logout:hover {
+    filter: brightness(1.1);
+}
+#v-logout:active {
+    transition: 100ms ease-out;
+    filter: brightness(1.2);
+}
+
+/* ------ department (r) ------ */
+
+#r-header {
+    padding: 0 12rem;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#r-title {
+    font-size: 3rem;
+}
+
+#r-badges-container {
+    padding: 0.3rem 1rem;
+    margin-left: 26rem;
+    border-radius: .6rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    background-color: var(--quaternary);
+}
+
+#r-badges-icon {
+    width: 2.5rem;
+    margin-right: 1rem;
+}
+
+#r-badges-stats {
+    color: var(--tertiary);
+    cursor: default;
+}
+
+#r-logout {
+    padding: .85rem 1.85rem;
+    border-radius: .6rem;
+    font-size: 1.2rem;
+    text-decoration: none;
+    background-color: var(--logout);
+    color: var(--secondary);
+    transition: 300ms ease-out;
+}
+#r-logout:hover {
+    filter: brightness(1.1);
+}
+#r-logout:active {
+    transition: 100ms ease-out;
+    filter: brightness(1.2);
+}
+
+#r-add {
+    padding: .85rem 1.85rem;
+    border-radius: .6rem;
+    font-size: 1.2rem;
+    text-decoration: none;
+    background-color: var(--tertiary);
+    color: var(--secondary);
+    transition: 300ms ease-out;
+}
+#r-add:hover {
+    filter: brightness(1.1);
+}
+#r-add:active {
+    transition: 100ms ease-out;
+    filter: brightness(1.2);
+}
+
+#r-main {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#r-err-cont {
+    width: 17rem;
+    padding: 1rem 1.3rem;
+    margin-bottom: 1.2rem;
+    outline: .0625rem solid var(--error);
+    border-radius: .5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--error-container);
+}
+
+#r-err-msg {
+    width: calc(100% - 2.2rem);
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+#r-err-canc {
+    width: 1.5rem;
+    margin-left: .7rem;
+    transition: 150ms ease-out;
+}
+#r-err-canc:hover {
+    filter: brightness(0.8);
+}
+#r-err-canc:active {
+    transition: 100ms ease-out;
+    filter: brightness(0.6);
+}
+
+#date-filter {
+    width: 17rem;
+    padding: 1.3rem;
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #1E1048C0;
+}
+
+#date-filter label {
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+#date-filter input {
+    width: 15.47rem;
+    padding: .4rem .75rem;
+    margin: .5rem 0 1.25rem 0;
+    border: none;
+    border-radius: .3rem;
+    outline: 0.0625rem solid #AF92FF44;
+    font-size: 1rem;
+    background-color: var(--primary);
+    color: var(--secondary);
+    transition: 100ms ease-out;
+}
+#date-filter input:focus {
+    outline: 0.13rem solid var(--tertiary);
+}
+
+#date-filter button {
+    padding: .4rem .75rem;
+    border: none;
+    border-radius: .3rem;
+    font-size: 1rem;
+    background-color: var(--search);
+    color: var(--secondary);
+    transition: 300ms ease-out;
+}
+#date-filter button:hover {
+    filter: brightness(1.1);
+}
+#date-filter button:active {
+    transition: 100ms ease-out;
+    filter: brightness(1.2);
+}
+
+#r-visits-table-cont {
+    margin-top: 3rem;
+}
+
+#r-visits-table {
+    width: calc(100vw - 24rem);
+    table-layout: fixed;
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+#r-visits-table th {
+    font-weight: 700;
+}
+
+#r-visits-table td {
     text-align: center;
 }
