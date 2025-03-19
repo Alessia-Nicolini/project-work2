@@ -48,7 +48,7 @@ public class DepartmentResource {
     private TemplateInstance getDepartmentTemplate(LocalDate date, String sessionId) {
         List<Visit> visitsByDate = visitService.getVisitsByDate(date, visitRepository.getAllVisits());
         int employeeId = sessionService.getEmployeeFromSession(sessionId).getId();
-        List<Visit> visits = visitService.getVisitsByEmployeeId(employeeId, visitsByDate);
+        List<Visit> visits = visitService.getVisitsByEmployeeId(employeeId, visitService.enrichVisitsWithNames(visitsByDate));
         return department
                 .data("selected-date", date)
                 .data("visits", visits);
