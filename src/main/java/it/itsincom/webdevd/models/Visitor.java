@@ -1,7 +1,5 @@
 package it.itsincom.webdevd.models;
 
-
-
 public class Visitor {
     private final int id;
     private final String first_name;

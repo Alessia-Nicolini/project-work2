@@ -1,10 +1,8 @@
 package it.itsincom.webdevd.models;
 
 import it.itsincom.webdevd.models.enums.Department;
-import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.Objects;
-
 
 public class Employee {
     private final int id;

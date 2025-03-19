@@ -1,7 +1,6 @@
 package it.itsincom.webdevd.models;
 
 import it.itsincom.webdevd.models.enums.Status;
-import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.LocalDateTime;
 
