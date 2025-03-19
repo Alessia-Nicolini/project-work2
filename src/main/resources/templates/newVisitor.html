@@ -1,67 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
     <title>New Visitor</title>
     <link rel="stylesheet" href="assets/styles/style.css">
-    <style>
-        body{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-
-        }
-        .visitor-conteiner{
-            background-color: #cc88f9;
-            padding: 30px;
-            border-radius: 5px;
-            width: 600px;
-            height: auto;
-            text-align: center;
-            flex-direction:column;
-        }
-        input{
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            margin-top: 15px;
-            border: 1px solid black;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button{
-            background-color: white;
-            border-radius: 5px;
-            margin: 15px;
-            padding: 10px;
-            width: 50%;
-        }
-        #button{
-            display: flex;
-        }
-    </style>
 </head>
-<body>
-<div class="visitor-conteiner">
-<h1>Registra un nuovo visitatore:</h1>
-<form action="/newVisitor" method="post">
-    <label for="name">Inserisci il nome:</label>
-    <input type="text" id="name" name="name" placeholder="Inserisci il nome" required>
-
-    <label for="surname">Inserisci il cognome:</label>
-    <input type="text" id="surnamee" name="surname" placeholder="Inserisci il cognome" required>
-
-    <label for="email">Inserisci l'email:</label>
-    <input type="email" id="email" name="email" placeholder="Inserisci l'email:" required>
-
-    <label for="phone">Inserisci il numero di telefono:</label>
-    <input type="text" id="phone" name="phone" placeholder="Inserisci il numero di telefono:" required>
-    <div id="button">
-        <button type="submit" value="Invia">Registra</button>
-        <button type="reset" value="Cancella">Elimina</button>
-    </div>
-</form>
-</div>
-
+<body id="g-body">
+    <header id="g-header">
+        <h1 id="g-title" class="unselectable">Info<span>Drive</span></h1>
+        <a href="/logout" id="g-logout">Esci</a>
+    </header>
+        <section id="g-form-section">
+            <h2 id="g-section-title">Registra un nuovo visitatore:</h2>
+            <form action="/newVisitor" method="post" id="g-form">
+                <div class="g-form-field">
+                    <div class="label-cont">
+                        <label for="name">Inserisci il nome:</label>
+                    </div>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="g-form-field">
+                    <div class="label-cont">
+                        <label for="surname">Inserisci il cognome:</label>
+                    </div>
+                    <input type="text" id="surnamee" name="surname" required>
+                </div>
+                <div class="g-form-field">
+                    <div class="label-cont">
+                        <label for="email">Inserisci l'email:</label>
+                    </div>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="g-form-field">
+                    <div class="label-cont">
+                        <label for="phone">Inserisci il numero di telefono:</label>
+                    </div>
+                    <input type="text" id="phone" name="phone" required>
+                </div>
+                    <button type="submit" value="Invia">Registra</button><br/>
+                    <button type="reset" value="Cancella">Svuota campi</button>
+            </form>
+        </section>
 </body>
 </html>
