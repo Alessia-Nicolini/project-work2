@@ -6,77 +6,59 @@
     <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro@3.0.3/index.min.js"></script>
     <link rel="stylesheet" href="/assets/styles/style.css">
     <script src="/assets/scripts/script.js" defer></script>
-    <style>
-        body{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-
-        }
-        .visit-conteiner{
-            background-color: #cc88f9;
-            padding: 30px;
-            border-radius: 5px;
-            width: 600px;
-            height: auto;
-            text-align: center;
-            flex-direction:column;
-        }
-        input{
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            margin-top: 15px;
-            border: 1px solid black;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button{
-            background-color: white;
-            border-radius: 5px;
-            margin: 15px;
-            padding: 10px;
-            width: 50%;
-        }
-        #button{
-            display: flex;
-        }
-    </style>
 </head>
 <body>
-<div class="visit-conteiner">
-<h1>Aggiungi una nuova visita:</h1>
-<form action="/newVisit" method="post">
-    <label for="visitor-id">Visitatore:</label>
-    <select id="visitor-id" name="visitor-id" required>
-        <option disabled selected value>Seleziona il visitatore</option>
-        {#for visitor in visitors}
-            <option value="{visitor.id}">{visitor.firstName} {visitor.lastName}</option>
-        {/for}
-    </select>
-    <label for="employee-id">Dipendente:</label>
-    <select id="employee-id" name="employee-id" required>
-        <option disabled selected value>Seleziona il dipendente</option>
-        {#for employee in employees}
-            {#if employee.id == logged-employee.id}
-                <option value="{employee.id}" selected>{employee.firstName} {employee.lastName}</option>
-            {#else}
-                <option value="{employee.id}">{employee.firstName} {employee.lastName}</option>
-            {/if}
-        {/for}
-    </select>
-    <label for="start">Inserisci la data</label>
-    <input type="date" id="start" name="start" required readonly>
+    <header id="v-header">
+        <h1 id="v-title" class="unselectable">Info<span>Drive</span></h1>
+        <a href="/logout" id="v-logout">Esci</a>
+    </header>
+    <section id="v-form-section">
+    <h2 id="v-section-title">Aggiungi una nuova visita:</h2>
+    <form action="/newVisit" method="post" id="v-form">
+        <div class="v-form-field">
+            <div class="label-cont">
+                <label for="visitor-id">Visitatore:</label>
+            </div>
+                <select id="visitor-id" name="visitor-id" required>
+                    <option disabled selected value>Seleziona il visitatore</option>
+                    {#for visitor in visitors}
+                        <option value="{visitor.id}">{visitor.firstName} {visitor.lastName}</option>
+                    {/for}
+                </select>
+        </div>
+        <div class="v-form-field">
+            <div class="label-cont">
+                <label for="employee-id">Dipendente:</label>
+            </div>
+                <select id="employee-id" name="employee-id" required>
+                <option disabled selected value>Seleziona il dipendente</option>
+                    {#for employee in employees}
+                        {#if employee.id == logged-employee.id}
+                            <option value="{employee.id}" selected>{employee.firstName} {employee.lastName}</option>
+                        {#else}
+                            <option value="{employee.id}">{employee.firstName} {employee.lastName}</option>
+                        {/if}
+                    {/for}
+                </select>
+        </div>
+        <div class="v-form-field">
+            <div class="label-cont">
+                <label for="start">Inserisci la data</label>
+            </div>
+            <input type="date" id="start" name="start" required readonly>
+        </div>
+        <div class="v-form-field">
+            <div class="label-cont">
+                <label for="expected-duration">Inserisci la durata della visita in minuti:</label>
+            </div>
+            <input type="number" id="expected-duration" name="expected-duration" min="15" max="120" required>
+        </div>
 
-    <label for="expected-duration">Inserisci la durata della visita in minuti:</label>
-    <input type="number" id="expected-duration" name="expected-duration" min="15" max="120" required>
-
-    <div id="button">
-        <button type="submit" value="Invia">Aggiungi</button>
-        <button type="reset" value="Cancella">Elimina</button>
-    </div>
-</form>
-</div>
+        <div id="button">
+            <button type="submit" value="Invia">Aggiungi</button>
+            <button type="reset" value="Cancella">Svuota campi</button>
+        </div>
+    </form>
+    </section>
 </body>
 </html>
