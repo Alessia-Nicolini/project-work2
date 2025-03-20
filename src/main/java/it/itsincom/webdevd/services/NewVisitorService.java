@@ -6,14 +6,16 @@ import java.util.List;
 
 @ApplicationScoped
 public class NewVisitorService {
-    public static final String OPERATION_SUCCESS = "success";
+    public static final String OPERATION_SUCCESS = "Success";
+
     private final NewVisitorRepository newVisitorRepository;
 
     public NewVisitorService(NewVisitorRepository newVisitorRepository) {
         this.newVisitorRepository = newVisitorRepository;
     }
-    public String addNewVisitor(String name, String surname, String phone, String email) {
-        if (name == null || name.isEmpty() || surname == null || surname.isEmpty() ||
+
+    public String addNewVisitor(String first_name, String last_name, String email, String phone) {
+        if (first_name == null || first_name.isEmpty() || last_name == null || last_name.isEmpty() ||
                 phone == null || phone.isEmpty() || email == null || email.isEmpty()) {
             return "Tutti i campi sono obbligatori.";
         }
@@ -21,15 +23,15 @@ public class NewVisitorService {
         List<Visitor> visitors = newVisitorRepository.getAllVisitors();
 
         for (Visitor visitor : visitors) {
-            if (visitor.getFirstName().equalsIgnoreCase(name) &&
-                    visitor.getLastName().equalsIgnoreCase(surname) &&
+            if (visitor.getFirstName().equalsIgnoreCase(first_name) &&
+                    visitor.getLastName().equalsIgnoreCase(last_name) &&
                     visitor.getPhone().equals(phone) &&
                     visitor.getEmail().equals(email)) {
                 return "Il visitatore è già registrato!";
             }
         }
 
-        Visitor visitor = new Visitor(0, name, surname, phone, email);
+        Visitor visitor = new Visitor(0, first_name, last_name, email, phone);
 
         newVisitorRepository.addNewVisitor(visitor);
         return OPERATION_SUCCESS;

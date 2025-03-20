@@ -1,7 +1,7 @@
 package it.itsincom.webdevd.models;
 
 public class Visitor {
-    private final int id;
+    private int id;
     private final String first_name;
     private final String last_name;
     private String email;
@@ -20,6 +20,10 @@ public class Visitor {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
