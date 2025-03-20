@@ -9,50 +9,69 @@
     <script src="/assets/scripts/script.js" defer></script>
 </head>
 <body>
-    <header id="v-header">
-        <h1 id="v-title" class="unselectable">Info<span>Drive</span></h1>
-        <a href="/logout" id="v-logout">Esci</a>
-    </header>
+<header id="v-header">
+    <h1 id="v-title" class="unselectable">Info<span>Drive</span></h1>
+</header>
+<section id="v-form-section">
+    <h2 id="v-section-title">Aggiungi una nuova visita:</h2>
     {#if  success}
-        {success}
+        <div id="v-succ-cont">
+            <p id="v-succ-msg">{success}</p>
+            <svg id="v-succ-canc" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#90ee90">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                          fill="#90ee90"></path>
+                </g>
+            </svg>
+        </div>
     {/if}
     {#if  error}
-        {error}
+        <div id="v-err-cont">
+            <p id="v-err-msg">{error}</p>
+            <svg id="v-err-canc" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#CA2A22">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                          fill="#CA2A22"></path>
+                </g>
+            </svg>
+        </div>
     {/if}
-    <section id="v-form-section">
-    <h2 id="v-section-title">Aggiungi una nuova visita:</h2>
     <form action="/newVisit" method="post" id="v-form">
         <div class="v-form-field">
             <div class="label-cont">
                 <label for="visitor-id">Visitatore:</label>
             </div>
-                <select id="visitor-id" name="visitor-id" required>
-                    <option disabled selected value>Seleziona il visitatore</option>
-                    {#for visitor in visitors}
-                        <option value="{visitor.id}">{visitor.firstName} {visitor.lastName}</option>
-                    {/for}
-                </select>
+            <select id="visitor-id" name="visitor-id" required>
+                <option disabled selected value>Seleziona il visitatore</option>
+                {#for visitor in visitors}
+                    <option value="{visitor.id}">{visitor.firstName} {visitor.lastName}</option>
+                {/for}
+            </select>
         </div>
         <div class="v-form-field">
             <div class="label-cont">
                 <label for="employee-id">Dipendente:</label>
             </div>
-                <select id="employee-id" name="employee-id" required>
+            <select id="employee-id" name="employee-id" required>
                 <option disabled selected value>Seleziona il dipendente</option>
-                    {#for employee in employees}
-                        {#if employee.id == logged-employee.id}
-                            <option value="{employee.id}" selected>{employee.firstName} {employee.lastName}</option>
-                        {#else}
-                            <option value="{employee.id}">{employee.firstName} {employee.lastName}</option>
-                        {/if}
-                    {/for}
-                </select>
+                {#for employee in employees}
+                    {#if employee.id == logged-employee.id}
+                        <option value="{employee.id}" selected>{employee.firstName} {employee.lastName}</option>
+                    {#else}
+                        <option value="{employee.id}">{employee.firstName} {employee.lastName}</option>
+                    {/if}
+                {/for}
+            </select>
         </div>
         <div class="v-form-field">
             <div class="label-cont">
-                <label for="start">Inserisci la data</label>
+                <label for="start">Inserisci la data:</label>
             </div>
-            <input type="date" id="start" name="start" required readonly>
+            <input type="text" id="start" name="start" required readonly>
         </div>
         <div class="v-form-field">
             <div class="label-cont">
@@ -60,12 +79,9 @@
             </div>
             <input type="number" id="expected-duration" name="expected-duration" min="15" max="120" required>
         </div>
-
-        <div id="button">
             <button type="submit" value="Invia">Aggiungi</button>
             <a href="/department" id="v-back">Indietro</a>
-        </div>
     </form>
-    </section>
+</section>
 </body>
 </html>
