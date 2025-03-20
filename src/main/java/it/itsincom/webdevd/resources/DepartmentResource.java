@@ -12,6 +12,7 @@ import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 @Path("/department")
@@ -50,6 +51,7 @@ public class DepartmentResource {
         List<Visit> visitsByDate = visitService.getVisitsByDate(date, visitRepository.getAllVisits());
         int employeeId = sessionService.getEmployeeFromSession(sessionId).getId();
         List<Visit> visits = visitService.getVisitsByEmployeeId(employeeId, visitService.enrichVisitsWithNames(visitsByDate));
+        visits.sort(Comparator.comparing(Visit::getStart));
         return department
                 .data("selected-date", date)
                 .data("visits", visits);

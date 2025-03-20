@@ -14,6 +14,7 @@ import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -77,6 +78,7 @@ public class ReceptionResource {
         Map<String, Integer> badgeStats = badgeService.getBadgeStats();
         List<Visit> allVisits = visitRepository.getAllVisits();
         List<Visit> visits = visitService.getVisitsByDate(date, visitService.enrichVisitsWithNames(allVisits));
+        visits.sort(Comparator.comparing(Visit::getStart));
         return reception
                 .data("badge-stats", badgeStats)
                 .data("selected-date", date)
