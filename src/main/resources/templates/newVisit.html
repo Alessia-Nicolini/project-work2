@@ -12,6 +12,12 @@
         <h1 id="v-title" class="unselectable">Info<span>Drive</span></h1>
         <a href="/logout" id="v-logout">Esci</a>
     </header>
+    {#if  success}
+        {success}
+    {/if}
+    {#if  error}
+        {error}
+    {/if}
     <section id="v-form-section">
     <h2 id="v-section-title">Aggiungi una nuova visita:</h2>
     <form action="/newVisit" method="post" id="v-form">

@@ -1,6 +1,6 @@
 package it.itsincom.webdevd.services;
 import it.itsincom.webdevd.models.Visitor;
-import it.itsincom.webdevd.repositories.NewVisitorRepository;
+import it.itsincom.webdevd.repositories.VisitorRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.List;
 
@@ -8,9 +8,9 @@ import java.util.List;
 public class NewVisitorService {
     public static final String OPERATION_SUCCESS = "Success";
 
-    private final NewVisitorRepository newVisitorRepository;
+    private final VisitorRepository newVisitorRepository;
 
-    public NewVisitorService(NewVisitorRepository newVisitorRepository) {
+    public NewVisitorService(VisitorRepository newVisitorRepository) {
         this.newVisitorRepository = newVisitorRepository;
     }
 
@@ -33,7 +33,7 @@ public class NewVisitorService {
 
         Visitor visitor = new Visitor(0, first_name, last_name, email, phone);
 
-        newVisitorRepository.addNewVisitor(visitor);
+        newVisitorRepository.addVisitor(visitor);
         return OPERATION_SUCCESS;
     }
 }
