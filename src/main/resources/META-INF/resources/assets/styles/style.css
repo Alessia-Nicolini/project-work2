@@ -426,6 +426,13 @@ span {
     color: var(--secondary);
 }
 
+svg {
+    transition: transform 0.3s ease;
+}
+svg:hover {
+    transform: scale(1.2);
+}
+
 /*---- new visitor (guest) ----*/
 #g-body {
     background-color: var(--primary);
