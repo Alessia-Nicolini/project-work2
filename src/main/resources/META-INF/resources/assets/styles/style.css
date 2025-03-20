@@ -423,6 +423,23 @@ span {
     transition: 100ms ease-out;
     filter: brightness(1.2);
 }
+#g-back {
+    padding: .4rem .75rem;
+    border: none;
+    border-radius: .3rem;
+    font-size: 1rem;
+    background-color: #4682B4;
+    text-decoration: none;
+    color: var(--secondary);
+    transition: 300ms ease-out;
+}
+#g-back:hover {
+    filter: brightness(1.1);
+}
+#g-back:active {
+    transition: 100ms ease-out;
+    filter: brightness(1.2);
+}
 
 /*---- new visit ----*/
 #v-body {
