@@ -21,10 +21,10 @@ import java.util.stream.Collectors;
 public class VisitService {
     public static final String OPERATION_SUCCESS = "Success";
     public static final LocalTime MAX_TIME = LocalTime.of(16, 0);
-    public static final LocalTime MIN_TIME = LocalTime.of(8, 0);
+    public static final LocalTime MIN_TIME = LocalTime.of(9, 0);
     public static final int MAX_DURATION = 120;
     public static final int MIN_DURATION = 15;
-    private static final int BADGE_MAX_LATE = 15;
+    private static final int BADGE_MAX_LATE = 20;
 
     private final VisitRepository visitRepository;
     private final BadgeRepository badgeRepository;

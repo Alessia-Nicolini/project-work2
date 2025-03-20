@@ -19,6 +19,42 @@ try {
 }
 
 try {
+    document.getElementById("g-err-canc").addEventListener(
+        "click",
+        () => document.getElementById("g-err-cont").style.display = "none"
+    );
+} catch (e) {
+    console.log(e);
+}
+
+try {
+    document.getElementById("v-err-canc").addEventListener(
+        "click",
+        () => document.getElementById("v-err-cont").style.display = "none"
+    );
+} catch (e) {
+    console.log(e);
+}
+
+try {
+    document.getElementById("g-succ-canc").addEventListener(
+        "click",
+        () => document.getElementById("g-succ-cont").style.display = "none"
+    );
+} catch (e) {
+    console.log(e);
+}
+
+try {
+    document.getElementById("v-succ-canc").addEventListener(
+        "click",
+        () => document.getElementById("v-succ-cont").style.display = "none"
+    );
+} catch (e) {
+    console.log(e);
+}
+
+try {
     const {Calendar} = window.VanillaCalendarPro;
     const calendar = new Calendar("#date", {
         disableWeekdays: [0, 6],
@@ -46,7 +82,7 @@ try {
         locale: "it-IT",
         positionToInput: "auto",
         selectionTimeMode: 24,
-        timeMinHour: 8,
+        timeMinHour: 9,
         timeMaxHour: 16,
         timeStepMinute: 5,
         onChangeToInput(self) {
