@@ -1,17 +1,33 @@
 package it.itsincom.webdevd.services;
 import it.itsincom.webdevd.models.Visitor;
-import it.itsincom.webdevd.repositories.NewVisitorRepository;
+import it.itsincom.webdevd.repositories.VisitorRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.List;
 
 @ApplicationScoped
 public class NewVisitorService {
     public static final String OPERATION_SUCCESS = "Success";
+    private static final String EMAIL_REGEX = "^[^@]+@[^@]+$";
+    private static final String ITALIAN_MOBILE_REGEX = "^(\\+39\\s?|0039\\s?)?3\\d{2}[-\\s]?\\d{3}[-\\s]?\\d{4}$";
+    private static final String ITALIAN_FIXED_REGEX = "^(?:(?:\\+39|0039)\\s?)?(?:0\\d{1,3}|\\(0\\d{1,3}\\))[-\\s]?\\d{5,8}$";
 
-    private final NewVisitorRepository newVisitorRepository;
 
-    public NewVisitorService(NewVisitorRepository newVisitorRepository) {
-        this.newVisitorRepository = newVisitorRepository;
+    private final VisitorRepository visitorRepository;
+
+    public NewVisitorService(VisitorRepository visitorRepository) {
+        this.visitorRepository = visitorRepository;
+    }
+
+    public static boolean isValidEmail(String email) {
+        return email != null && email.matches(EMAIL_REGEX);
+    }
+
+    public static boolean isValidItalianMobile(String phone) {
+        return phone != null && phone.matches(ITALIAN_MOBILE_REGEX);
+    }
+
+    public static boolean isValidItalianFixed(String phone) {
+        return phone != null && phone.matches(ITALIAN_FIXED_REGEX);
     }
 
     public String addNewVisitor(String first_name, String last_name, String email, String phone) {
@@ -20,7 +36,14 @@ public class NewVisitorService {
             return "Tutti i campi sono obbligatori.";
         }
 
-        List<Visitor> visitors = newVisitorRepository.getAllVisitors();
+        if (!isValidEmail(email)) {
+            return "Email non valida.";
+        }
+        if (!isValidItalianMobile(phone) && !isValidItalianFixed(phone)) {
+            return "Numero di telefono non valido.";
+        }
+
+        List<Visitor> visitors = visitorRepository.getAllVisitors();
 
         for (Visitor visitor : visitors) {
             if (visitor.getFirstName().equalsIgnoreCase(first_name) &&
@@ -31,9 +54,11 @@ public class NewVisitorService {
             }
         }
 
-        Visitor visitor = new Visitor(0, first_name, last_name, email, phone);
+        int visitorId = visitorRepository.getLastVisitorId() + 1;
 
-        newVisitorRepository.addNewVisitor(visitor);
+        Visitor visitor = new Visitor(visitorId, first_name, last_name, email, phone);
+
+        visitorRepository.addVisitor(visitor);
         return OPERATION_SUCCESS;
     }
 }

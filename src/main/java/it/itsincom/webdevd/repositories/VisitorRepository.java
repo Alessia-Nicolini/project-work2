@@ -1,12 +1,10 @@
 package it.itsincom.webdevd.repositories;
-
 import it.itsincom.webdevd.models.Visitor;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Reader;
@@ -21,20 +19,12 @@ import java.util.Optional;
 public class VisitorRepository {
     private static final String FILE_PATH = "data/visitors.csv";
     private static final String[] HEADER = {"id", "first_name", "last_name", "email", "phone"};
-
-    private static final CSVFormat CSV_FORMAT_READ = CSVFormat.Builder.create()
-            .setHeader(HEADER)
-            .setSkipHeaderRecord(true)
-            .get();
-
-    private static final CSVFormat CSV_FORMAT_WRITE = CSVFormat.Builder.create()
-            .setHeader(HEADER)
-            .get();
+    private static final CSVFormat CSV_FORMAT_READ = CSVFormat.Builder.create().setHeader(HEADER).setSkipHeaderRecord(true).get();
+    private static final CSVFormat CSV_FORMAT_WRITE = CSVFormat.Builder.create().setHeader(HEADER).get();
 
     public List<Visitor> getAllVisitors() {
         List<Visitor> visitors = new ArrayList<>();
-        try (Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH), StandardCharsets.UTF_8);
-             CSVParser csvParser = CSVParser.parse(reader, CSV_FORMAT_READ)) {
+        try (Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH), StandardCharsets.UTF_8); CSVParser csvParser = CSVParser.parse(reader, CSV_FORMAT_READ)) {
             for (CSVRecord record : csvParser) {
                 visitors.add(parseRecord(record));
             }
@@ -50,8 +40,7 @@ public class VisitorRepository {
     }
 
     public String getNameById(int id) {
-        try (Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH), StandardCharsets.UTF_8);
-             CSVParser parser = CSVParser.parse(reader, CSV_FORMAT_READ)) {
+        try (Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH), StandardCharsets.UTF_8); CSVParser parser = CSVParser.parse(reader, CSV_FORMAT_READ)) {
             for (CSVRecord record : parser) {
                 if (record.get("id").equals(String.valueOf(id))) {
                     return record.get("first_name") + " " + record.get("last_name");
@@ -78,19 +67,14 @@ public class VisitorRepository {
         List<Visitor> visitors = getAllVisitors();
         visitors.add(newVisitor);
         writeAllVisitors(visitors);
+        System.out.println(newVisitor);
+        System.out.println(visitors);
     }
 
     private void writeAllVisitors(List<Visitor> visitors) {
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILE_PATH), StandardCharsets.UTF_8);
-             CSVPrinter csvPrinter = new CSVPrinter(writer, CSV_FORMAT_WRITE)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILE_PATH), StandardCharsets.UTF_8); CSVPrinter csvPrinter = new CSVPrinter(writer, CSV_FORMAT_WRITE)) {
             for (Visitor visitor : visitors) {
-                csvPrinter.printRecord(
-                        visitor.getId(),
-                        visitor.getFirstName(),
-                        visitor.getLastName(),
-                        visitor.getEmail(),
-                        visitor.getPhone()
-                );
+                csvPrinter.printRecord(visitor.getId(), visitor.getFirstName(), visitor.getLastName(), visitor.getEmail(), visitor.getPhone());
             }
             csvPrinter.flush();
         } catch (IOException e) {
@@ -106,4 +90,18 @@ public class VisitorRepository {
         String phone = record.get("phone");
         return new Visitor(id, firstName, lastName, email, phone);
     }
+
+    public int getLastVisitorId() {
+        int id = 0;
+        try (Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH), StandardCharsets.UTF_8);
+             CSVParser csvParser = CSVParser.parse(reader, CSV_FORMAT_READ)) {
+            for (CSVRecord record : csvParser) {
+                id = Integer.parseInt(record.get("id"));
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+        return id;
+    }
 }
+

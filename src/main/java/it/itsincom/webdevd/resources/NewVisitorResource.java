@@ -1,6 +1,10 @@
 package it.itsincom.webdevd.resources;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
+import it.itsincom.webdevd.services.DepartmentService;
+import it.itsincom.webdevd.services.NewVisitorService;
+import it.itsincom.webdevd.services.SessionService;
+import it.itsincom.webdevd.services.VisitService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import java.io.*;
@@ -13,75 +17,53 @@ public class NewVisitorResource {
     private static final String FILE_PATH = "data/visitors.csv";
 
     private final Template newVisitor;
+    private final DepartmentService departmentService;
+    private final NewVisitorService newVisitorService;
 
-    public NewVisitorResource(Template newVisitor) {
+    public NewVisitorResource(Template newVisitor, DepartmentService departmentService, NewVisitorService newVisitorService) {
         this.newVisitor = newVisitor;
+        this.departmentService = departmentService;
+        this.newVisitorService = newVisitorService;
     }
 
     @GET
-    public TemplateInstance showRegistrationPage() {
-        return newVisitor.data("message", null);
+    public Response showRegistrationPage(@CookieParam(SessionService.SESSION_COOKIE_NAME) String sessionId) {
+        Response response = departmentService.checkSession(sessionId);
+        if (response != null) {
+            return response;
+        }
+        TemplateInstance page = getNewVisitorTemplate(sessionId, null, null);
+        return Response.ok(page).build();
     }
 
     @POST
     public Response processRegistration(
-            @FormParam("name") String name,
-            @FormParam("surname") String surname,
+            @FormParam("first-name") String firstName,
+            @FormParam("last-name") String lastName,
             @FormParam("phone") String phone,
-            @FormParam("email") String email) {
-
-        String messaggioErrore = null;
-
-        if (name == null || name.isEmpty() || surname == null || surname.isEmpty() ||
-                phone == null || phone.isEmpty() || email == null || email.isEmpty()) {
-            messaggioErrore = "Tutti i campi sono obbligatori.";
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(newVisitor.data("message", messaggioErrore))
-                    .build();
+            @FormParam("email") String email,
+            @CookieParam(SessionService.SESSION_COOKIE_NAME) String sessionId) {
+        Response response = departmentService.checkSession(sessionId);
+        if (response != null) {
+            return response;
         }
 
-        if (isVisitorAlreadyRegistered(name, surname, phone, email)) {
-            messaggioErrore = "Il visitatore è già registrato!";
-            return Response.seeOther(URI.create("department")).entity(newVisitor.data("visitorConfermation", "Visitatore Salvato")).build();
+        String result = newVisitorService.addNewVisitor(firstName, lastName, phone, email);
+        if (result.equals(VisitService.OPERATION_SUCCESS)) {
+            return buildResponse(sessionId, "Visitatore aggiunto con successo!", null);
         }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            writer.write(name + "," + surname + "," + phone + "," + email);
-            writer.newLine();
-        } catch (IOException e) {
-            return Response.serverError().entity("Errore nel salvataggio.").build();
-        }
-
-        return Response.seeOther(URI.create("/department")).build();
-
+        return buildResponse(sessionId, null, result);
     }
 
-    private boolean isVisitorAlreadyRegistered(String nome, String cognome, String telefono, String email) {
-        if (!Files.exists(Paths.get(FILE_PATH))) {
-            return false;
+    private Response buildResponse(String sessionId, String success, String error) {
+        TemplateInstance page = getNewVisitorTemplate(sessionId, success, error);
+        if (error == null) {
+            return Response.ok().entity(page).build();
         }
+        return Response.status(409).entity(page).build();
+    }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] dati = line.split(",");
-                if (dati.length == 4) {
-                    String storedNome = dati[0].trim();
-                    String storedCognome = dati[1].trim();
-                    String storedTelefono = dati[2].trim();
-                    String storedEmail = dati[3].trim();
-
-                    if (storedNome.equalsIgnoreCase(nome) &&
-                            storedCognome.equalsIgnoreCase(cognome) &&
-                            storedTelefono.equals(telefono) &&
-                            storedEmail.equals(email)) {
-                        return true;
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+    private TemplateInstance getNewVisitorTemplate(String sessionId, String success, String error) {
+        return newVisitor.data("success", success).data("error", error);
     }
 }

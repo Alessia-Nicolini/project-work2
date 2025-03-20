@@ -15,9 +15,6 @@ public class Visitor {
         this.phone = phone;
     }
 
-    public void setId(int id) {
-    }
-
     public int getId() {
         return id;
     }
