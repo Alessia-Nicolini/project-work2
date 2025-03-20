@@ -1,5 +1,5 @@
 package it.itsincom.webdevd.repositories;
-import it.itsincom.webdevd.model.Visitor;
+import it.itsincom.webdevd.models.Visitor;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -72,7 +72,7 @@ public class NewVisitorRepository {
              CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(HEADER))) {
 
             for (Visitor visitor : visitors) {
-                csvPrinter.printRecord(visitor.getId(), visitor.getName(), visitor.getSurname(), visitor.getPhone(), visitor.getEmail());
+                csvPrinter.printRecord(visitor.getId(), visitor.getFirstName(), visitor.getLastName(), visitor.getPhone(), visitor.getEmail());
             }
             csvPrinter.flush();
         } catch (IOException e) {

@@ -1,5 +1,5 @@
 package it.itsincom.webdevd.services;
-import it.itsincom.webdevd.model.Visitor;
+import it.itsincom.webdevd.models.Visitor;
 import it.itsincom.webdevd.repositories.NewVisitorRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.List;
@@ -21,8 +21,8 @@ public class NewVisitorService {
         List<Visitor> visitors = newVisitorRepository.getAllVisitors();
 
         for (Visitor visitor : visitors) {
-            if (visitor.getName().equalsIgnoreCase(name) &&
-                    visitor.getSurname().equalsIgnoreCase(surname) &&
+            if (visitor.getFirstName().equalsIgnoreCase(name) &&
+                    visitor.getLastName().equalsIgnoreCase(surname) &&
                     visitor.getPhone().equals(phone) &&
                     visitor.getEmail().equals(email)) {
                 return "Il visitatore è già registrato!";
