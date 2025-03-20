@@ -36,6 +36,8 @@ public class SessionService {
     }
 
     public void invalidateSession(String sessionId) {
-        sessionsEmployees.remove(sessionId);
+        if (sessionId != null) {
+            sessionsEmployees.remove(sessionId);
+        }
     }
 }
