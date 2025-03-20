@@ -9,6 +9,12 @@
         <h1 id="g-title" class="unselectable">Info<span>Drive</span></h1>
         <a href="/logout" id="g-logout">Esci</a>
     </header>
+    {#if success}
+        {success}
+    {/if}
+    {#if error}
+        {error}
+    {/if}
         <section id="g-form-section">
             <h2 id="g-section-title">Registra un nuovo visitatore:</h2>
             <form action="/newVisitor" method="post" id="g-form">
@@ -16,13 +22,13 @@
                     <div class="label-cont">
                         <label for="name">Inserisci il nome:</label>
                     </div>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="first-name" name="first-name" required>
                 </div>
                 <div class="g-form-field">
                     <div class="label-cont">
                         <label for="surname">Inserisci il cognome:</label>
                     </div>
-                    <input type="text" id="surnamee" name="surname" required>
+                    <input type="text" id="last-name" name="last-name" required>
                 </div>
                 <div class="g-form-field">
                     <div class="label-cont">
@@ -34,7 +40,7 @@
                     <div class="label-cont">
                         <label for="phone">Inserisci il numero di telefono:</label>
                     </div>
-                    <input type="text" id="phone" name="phone" required>
+                    <input type="tel" id="phone" name="phone" required>
                 </div>
                     <button type="submit" value="Invia">Registra</button>
                     <a href="/department" id="g-back">Indietro</a>
