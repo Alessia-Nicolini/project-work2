@@ -3,6 +3,7 @@ package it.itsincom.webdevd.models;
 import it.itsincom.webdevd.models.enums.Status;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Visit {
     private final int id;
@@ -10,18 +11,19 @@ public class Visit {
     private final int employeeId;
     private final LocalDateTime start;
     private final int expectedDuration;
-    private LocalDateTime end;
+    private String end;
     private String badgeCode;
     private Status status;
     private String visitorName;
     private String employeeName;
+    private final LocalTime expectedEndTime;
 
     public Visit(int id,
                  int visitorId,
                  int employeeId,
                  LocalDateTime start,
                  int expectedDuration,
-                 LocalDateTime end,
+                 String end,
                  String badgeCode,
                  Status status) {
         this.id = id;
@@ -32,6 +34,7 @@ public class Visit {
         this.end = end;
         this.badgeCode = badgeCode;
         this.status = status;
+        this.expectedEndTime = start.plusMinutes(expectedDuration).toLocalTime();
     }
 
     public int getId() {
@@ -54,11 +57,11 @@ public class Visit {
         return expectedDuration;
     }
 
-    public LocalDateTime getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setAEnd(LocalDateTime end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 
@@ -92,5 +95,9 @@ public class Visit {
 
     public void setEmployeeName(String employeeName) {
         this.employeeName = employeeName;
+    }
+
+    public LocalTime getExpectedEndTime() {
+        return expectedEndTime;
     }
 }

@@ -67,6 +67,7 @@
                     <th>Dipendente</th>
                     <th>Ora d'inizio</th>
                     <th>Durata prevista</th>
+                    <th>Ora di fine</th>
                     <th>Stato</th>
                     <th>Badge</th>
                     <th>Azione</th>
@@ -79,6 +80,11 @@
                         <td>{visit.employeeName}</td>
                         <td>{visit.start.toLocalTime}</td>
                         <td>{visit.expectedDuration} min</td>
+                        {#if visit.end == null}
+                            <td class="d-v-f-p">{visit.expectedEndTime}</td>
+                        {#else}
+                            <td>{visit.end}</td>
+                        {/if}
                         <td>
                             {#if visit.status == pending}
                                 <div class="d-v-status-cont">
@@ -102,13 +108,15 @@
                             {#if badge-stats.available > 0 && visit.status == pending}
                                 <form method="POST" action="/reception/assign-badge">
                                     <input type="hidden" name="visit-id" value="{visit.id}">
-                                    <button type="submit" class="d-v-submit" id="d-v-submit-assegna">Assegna badge</button>
+                                    <button type="submit" class="d-v-submit" id="d-v-submit-assegna">Assegna badge
+                                    </button>
                                 </form>
                             {/if}
                             {#if visit.status == in-progress}
                                 <form method="POST" action="/reception/end-visit">
                                     <input type="hidden" name="visit-id" value="{visit.id}">
-                                    <button type="submit" class="d-v-submit" id="d-v-submit-termina">Termina visita</button>
+                                    <button type="submit" class="d-v-submit" id="d-v-submit-termina">Termina visita
+                                    </button>
                                 </form>
                             {/if}
                         </td>

@@ -32,9 +32,11 @@
             <table id="r-visits-table">
                 <thead>
                 <tr>
-                    <th>Nome e Cognome</th>
-                    <th>Ora di Inizio</th>
-                    <th>Ora di Fine</th>
+                    <th>Visitatore</th>
+                    <th>Ora d'inizio</th>
+                    <th>Durata prevista</th>
+                    <th>Ora di fine</th>
+                    <th>Stato</th>
                     <th>Azione</th>
                 </tr>
                 </thead>
@@ -43,16 +45,39 @@
                     <tr>
                         <td>{visit.visitorName}</td>
                         <td>{visit.start.toLocalTime}</td>
+                        <td>{visit.expectedDuration} min</td>
+                        {#if visit.end == null}
+                            <td class="d-v-f-p">{visit.expectedEndTime}</td>
+                        {#else}
+                            <td>{visit.end}</td>
+                        {/if}
                         <td>
-                            {#if visit.end != null}
-                                {visit.end.toLocalTime}
+                            {#if visit.status == pending}
+                                <div class="d-v-status-cont-r">
+                                    <div class="d-v-status" id="d-v-status-attesa"></div>
+                                    In attesa
+                                </div>
+                            {#else if visit.status == in-progress}
+                                <div class="d-v-status-cont-r">
+                                    <div class="d-v-status" id="d-v-status-corso"></div>
+                                    In corso
+                                </div>
+                            {#else}
+                                <div class="d-v-status-cont-r">
+                                    <div class="d-v-status" id="d-v-status-completato"></div>
+                                    Completato
+                                </div>
                             {/if}
                         </td>
                         <td>
-                            <form method="post" action="/department/delete">
-                                <input type="hidden" name="visitId" value="{visit.id}"/>
-                                <button type="submit" class="d-v-submit" style="width: 50%; background-color: var(--error)">Annulla</button>
-                            </form>
+                            {#if visit.status != in-progress && visit.status != completed}
+                                <form method="post" action="/department/delete">
+                                    <input type="hidden" name="visitId" value="{visit.id}"/>
+                                    <button type="submit" class="d-v-submit"
+                                            style="width: 50%; background-color: var(--error)">Annulla
+                                    </button>
+                                </form>
+                            {/if}
                         </td>
                     </tr>
                 {/for}

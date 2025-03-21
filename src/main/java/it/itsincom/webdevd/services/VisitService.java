@@ -14,6 +14,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -100,7 +101,7 @@ public class VisitService {
             return "Solo le visite in corso possono essere terminate.";
         }
         visit.setStatus(Status.COMPLETATO);
-        visit.setAEnd(LocalDateTime.now());
+        visit.setEnd(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         visitRepository.updateVisit(visit);
         if (visit.getBadgeCode() != null) {
             badgeRepository.releaseBadge(visit.getBadgeCode());

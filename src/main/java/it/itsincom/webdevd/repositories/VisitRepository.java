@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +96,7 @@ public class VisitRepository {
                         visit.getEmployeeId(),
                         visit.getStart().format(DATE_TIME_FORMATTER),
                         visit.getExpectedDuration(),
-                        visit.getEnd() != null ? visit.getEnd().format(DATE_TIME_FORMATTER) : "",
+                        visit.getEnd() != null ? visit.getEnd() : "",
                         visit.getBadgeCode() != null ? visit.getBadgeCode() : "",
                         visit.getStatus().name()
                 );
@@ -113,7 +114,7 @@ public class VisitRepository {
         LocalDateTime start = LocalDateTime.parse(record.get("start"), DATE_TIME_FORMATTER);
         int expectedDuration = Integer.parseInt(record.get("expected_duration"));
         String endStr = record.get("end");
-        LocalDateTime end = (endStr == null || endStr.isEmpty()) ? null : LocalDateTime.parse(endStr, DATE_TIME_FORMATTER);
+        String end = (endStr == null || endStr.isEmpty()) ? null : endStr;
         String badgeCode = record.get("badge_code");
         if (badgeCode != null && badgeCode.isEmpty()) {
             badgeCode = null;

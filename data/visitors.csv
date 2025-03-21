@@ -1,1 +1,11 @@
 id,first_name,last_name,email,phone
+1,Lewis,Hamilton,lewis.hamilton@example.com,3123456789
+2,Charles,Leclerc,charles.leclerc@example.com,3234567890
+3,Max,Verstappen,max.verstappen@example.com,3345678901
+4,Liam,Lawson,liam.lawson@example.com,3456789012
+5,George,Russell,george.russell@example.com,3567890123
+6,Kimi,Antonelli,kimi.antonelli@example.com,3678901234
+7,Lando,Norris,lando.norris@example.com,3789012345
+8,Oscar,Piastri,oscar.piastri@example.com,3890123456
+9,Sebastian,Vettel,sebastian.vettel@example.com,3901234567
+10,Kimi,Raikkonen,kimi.raikkonen@example.com,3012345678

@@ -3,6 +3,7 @@ package it.itsincom.webdevd.resources;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import it.itsincom.webdevd.models.Visit;
+import it.itsincom.webdevd.models.enums.Status;
 import it.itsincom.webdevd.repositories.VisitRepository;
 import it.itsincom.webdevd.services.DepartmentService;
 import it.itsincom.webdevd.services.SessionService;
@@ -54,7 +55,10 @@ public class DepartmentResource {
         visits.sort(Comparator.comparing(Visit::getStart));
         return department
                 .data("selected-date", date)
-                .data("visits", visits);
+                .data("visits", visits)
+                .data("pending", Status.IN_ATTESA)
+                .data("in-progress", Status.IN_CORSO)
+                .data("completed", Status.COMPLETATO);
     }
 
     @POST
